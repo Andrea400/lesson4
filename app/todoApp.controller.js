@@ -1,31 +1,38 @@
 (function(angular) {
 
     'use strict';
-    var module = angular.module('todoApp', ['ngMaterial']);
+    //var module = angular.module('todoApp', ['ngMaterial']);
 
     angular.module('todoApp').controller('TodoController', TodoController);
 
+TodoController.$inject = ['storageService','$mdDialog'];
     //This is the application controller
     function TodoController(storageService, $mdDialog) {
         var vm = this;
 
         vm.selectedItem = null;
         vm.items = storageService.get() || [];
+        vm.notDone = notDone;
+        vm.done = done;
+        vm.all = all;
+        vm.deleteItem = deleteItem;
+        vm.createItem = createItem;
+        vm.addTask = addTask;
 
-        vm.notDone = function(item) {
+        function notDone(item) {
             return item.done == false;
         }
 
-        vm.done = function(item) {
+        function done(item) {
             return item.done == true;
         }
 
-        vm.all = function(item) {
+        function all(item) {
             return true;
         }
 
         //Delete the current selected item, if any
-        vm.deleteItem = function(ev) {
+        function deleteItem(ev) {
 
             if (vm.selectedItem != null) {
                 var confirm = $mdDialog.confirm()
@@ -49,7 +56,7 @@
         }
 
         //Creates a new item with the given parameters
-        vm.createItem = function(title, priority, done, date) {
+        function createItem(title, priority, done, date) {
             vm.items.push({
                 title: title,
                 done: done || false,
@@ -61,7 +68,7 @@
 
 
         //Add a new task to the items list 
-        vm.addTask = function(ev) {
+        function addTask(ev) {
             var confirm = $mdDialog.prompt()
                 .title('Add new task')
                 .placeholder('Your task title...')
