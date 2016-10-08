@@ -79,13 +79,16 @@
                 </md-list>
             </md-content>
 
-            <md-button ng-click="ctrl.toggleMenu()" class="md-fab md-primary menu-button" ng-o >
+            
+
+
+            <md-content class="no-scroll ">
+
+                <md-button ng-click="ctrl.toggleMenu()" class="md-fab md-primary menu-button" >
                   <md-icon>menu</md-icon>
-            </md-button>
-
-
-            <md-content    class="no-scroll">
+                </md-button>
                 <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
+                    
                     <md-tab label="Todo">
                         <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone"></custom-list>
                     </md-tab>

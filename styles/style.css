@@ -7,9 +7,11 @@
 }
 
 .menu-button{
+   
+    position:absolute;
     float:left;
     top:40%;
-    left:-40px;
+    right:98%;
    
 }
 
@@ -19,6 +21,7 @@ md-tab-content.md-no-scroll>div,
 .no-scroll {
     height: 100%;
     overflow-y: hidden !important;
+    
 }
 
 .scroll {
@@ -34,10 +37,12 @@ md-tab-content.md-no-scroll>div,
     background: #eaeaea;
 }
 
+
 #menuSx{
     float:left;
     height: 100%;
     background: #222999;
+   
    
 }
 #menuSx md-icon{
