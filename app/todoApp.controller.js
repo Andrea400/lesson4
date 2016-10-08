@@ -1,6 +1,7 @@
 (function(angular) {
 
     'use strict';
+    //var module = angular.module('todoApp', ['ngMaterial']);
 
     angular.module('todoApp').controller('TodoController', TodoController);
 
@@ -17,6 +18,12 @@ TodoController.$inject = ['storageService','$mdDialog'];
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.addTask = addTask;
+        vm.search = false; //booleano per "barra Search"
+        vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
+
+        vm.viewBar=false;
+        vm.toggleMenu = toggleMenu;
+       
 
         function notDone(item) {
             return item.done == false;
@@ -80,8 +87,27 @@ TodoController.$inject = ['storageService','$mdDialog'];
                 if (result)
                     vm.createItem(result);
             });
-        };
+        }
+        // rende visivile/invisibile la barra-Search quando si preme l'apposita icona
+        function toggleSearch(){
+           
+           if(vm.search) 
+                vm.search=false;
+           else 
+                vm.search=true;
+        }
 
+        
+        function toggleMenu(){
+            
+               if(vm.viewBar)
+                     vm.viewBar=false;
+                else
+                    vm.viewBar=true;
+           
+        }
+       
+        
     }
 
 

@@ -30,19 +30,61 @@
 
 <body ng-app="todoApp" class="no-scroll">
     <div ng-controller="TodoController as ctrl" class="no-scroll">
-        <div layout="column" class="no-scroll">
+        
+        <div ng-mousemove="ctrl.mouseListener($event)" class="no-scroll">
             <md-toolbar class="md-whiteframe-3dp">
                 <div class="md-toolbar-tools">
                     <h2>
-                        <span>Task App</span>
+                        <span>App</span>
                     </h2>
                     <span flex></span>
+
+                       <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
+                        <md-icon> search </md-icon>
+                    </md-button>                     
+                    
+                    <div ng-show="ctrl.search">
+                        <input ng-model="user.email" type="search">
+                    </div>
+                                        
                     <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
                         <md-icon> delete </md-icon>
                     </md-button>
+                    
                 </div>
             </md-toolbar>
-            <md-content class="no-scroll">
+
+            
+
+            <md-content  ng-show="ctrl.viewBar"  id="menuSx" class="md-whiteframe-3dp">
+                <md-list class="md-list-item-text" layout="column">
+                    <md-button  ng-click="ctrl.deleteItem()" class="md-icon-button " aria-label="Delete">
+                        <md-icon> delete </md-icon>
+                    </md-button>
+                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button " aria-label="Search">
+                        <md-icon> search </md-icon>
+                    </md-button>
+                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button " aria-label="Delete">
+                        <md-icon> delete </md-icon>
+                    </md-button>
+                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
+                        <md-icon> search </md-icon>
+                    </md-button>
+                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
+                        <md-icon> delete </md-icon>
+                    </md-button>
+                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
+                        <md-icon> search </md-icon>
+                    </md-button>  
+                </md-list>
+            </md-content>
+
+            <md-button ng-click="ctrl.toggleMenu()" class="md-fab md-primary menu-button" ng-o >
+                  <md-icon>menu</md-icon>
+            </md-button>
+
+
+            <md-content    class="no-scroll">
                 <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
                     <md-tab label="Todo">
                         <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone"></custom-list>
@@ -60,6 +102,7 @@
             </md-content>
 
         </div>
+       
     </div>
 </body>
 

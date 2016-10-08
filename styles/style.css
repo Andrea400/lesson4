@@ -2,8 +2,15 @@
 
 .add-button {
     position: absolute;
-    bottom: 30px;
+    bottom: 50px;
     right: 30px;
+}
+
+.menu-button{
+    float:left;
+    top:40%;
+    left:-40px;
+   
 }
 
 md-tabs.md-dynamic-height md-tabs-content-wrapper,
@@ -24,5 +31,15 @@ md-tab-content.md-no-scroll>div,
 }
 
 .selected {
-    background: #efefef;
+    background: #eaeaea;
+}
+
+#menuSx{
+    float:left;
+    height: 100%;
+    background: #222999;
+   
+}
+#menuSx md-icon{
+    color: #909090;
 }
