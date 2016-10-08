@@ -1,7 +1,6 @@
 (function(angular) {
 
     'use strict';
-    //var module = angular.module('todoApp', ['ngMaterial']);
 
     angular.module('todoApp').controller('TodoController', TodoController);
 
