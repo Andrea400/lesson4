@@ -25,15 +25,17 @@
     <script src="app/todoApp.controller.js"></script>
     <script src="app/storage.service.js"></script>    
     <script src="app/components/customList.directive.js"></script>
+    <script src="app/components/categoryList.directive.js"></script>
 
 </head>
 
 <body ng-app="todoApp" class="no-scroll">
     <div ng-controller="TodoController as ctrl" class="no-scroll">
         
-        <div ng-mousemove="ctrl.mouseListener($event)" class="no-scroll">
+        <div  class="no-scroll">
             <md-toolbar class="md-whiteframe-3dp">
                 <div class="md-toolbar-tools">
+                     
                     <h2>
                         <span>App</span>
                     </h2>
@@ -50,55 +52,20 @@
                     <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
                         <md-icon> delete </md-icon>
                     </md-button>
+
                     
                 </div>
             </md-toolbar>
 
-            
 
-            <md-content  ng-show="ctrl.viewBar"  id="menuSx" class="md-whiteframe-3dp">
-                <md-list class="md-list-item-text" layout="column">
-                    <md-button  ng-click="ctrl.deleteItem()" class="md-icon-button " aria-label="Delete">
-                        <md-icon> delete </md-icon>
-                    </md-button>
-                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button " aria-label="Search">
-                        <md-icon> search </md-icon>
-                    </md-button>
-                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button " aria-label="Delete">
-                        <md-icon> delete </md-icon>
-                    </md-button>
-                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
-                        <md-icon> search </md-icon>
-                    </md-button>
-                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
-                        <md-icon> delete </md-icon>
-                    </md-button>
-                    <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
-                        <md-icon> search </md-icon>
-                    </md-button>  
-                </md-list>
-            </md-content>
-
-            
-
-
-            <md-content class="no-scroll ">
-
-                <md-button ng-click="ctrl.toggleMenu()" class="md-fab md-primary menu-button" >
-                  <md-icon>menu</md-icon>
-                </md-button>
-                <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
-                    
-                    <md-tab label="Todo">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone"></custom-list>
-                    </md-tab>
-                    <md-tab label="Done">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.done"></custom-list>
-                    </md-tab>
-                    <md-tab label="All">
-                        <custom-list items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.all"></custom-list>
-                    </md-tab>
-                </md-tabs>
+              
+           
+             <!-- lista delle categorie-->
+            <md-content class="no-scroll " >
+                
+                    <!-- direttiva per visionare la lista delle categorie-->
+                   <category-list selected-category="ctrl.selectedCategory" items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone" lista-categorie = "ctrl.listaCategorie"> </category-list>                    
+              
                 <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.addTask($event)">
                     <md-icon>add</md-icon>
                 </md-button>

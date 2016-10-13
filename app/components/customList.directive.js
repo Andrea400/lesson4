@@ -14,6 +14,7 @@
                 items: '=',
                 selectedItem: '=',
                 filterFunction: '=',
+                categoria: '='
             },
             controller: customListController,
             controllerAs: 'customListCtrl',

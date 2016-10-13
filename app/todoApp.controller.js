@@ -21,8 +21,16 @@ TodoController.$inject = ['storageService','$mdDialog'];
         vm.search = false; //booleano per "barra Search"
         vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
 
-        vm.viewBar=false;
-        vm.toggleMenu = toggleMenu;
+       
+        // lista tabs(categorie)
+        
+        vm.selectedCategory=null;
+        vm.listaCategorie=[
+                         "Sport", 
+                         "Teatro",
+                         "Studio",
+        ]
+       
        
 
         function notDone(item) {
@@ -107,7 +115,7 @@ TodoController.$inject = ['storageService','$mdDialog'];
            
         }
        
-        
+       
     }
 
 

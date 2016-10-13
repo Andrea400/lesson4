@@ -1,0 +1,70 @@
+
+
+   <!-- menu' a tendina-->
+
+<md-menu-bar class="floatSx">
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              <md-icon>menu</md-icon>
+            </button>
+            <md-menu-content>
+              <md-menu-item>
+                <md-menu>
+                  <md-button ng-click="$mdOpenMenu()">New</md-button>
+                  <md-menu-content>
+                      <md-menu-divider></md-menu-divider>
+                    <md-menu-item><md-button ng-click="categoryListCtrl.addCategory($event)">Category</md-button></md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item><md-button ng-click="">Task</md-button></md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                  </md-menu-content>
+                </md-menu>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-click="">
+                  Open...
+                  <span class="md-alt-text"> </span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item> <md-button disabled="disabled" ng-click=""> Rename</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null"  ng-click="categoryListCtrl.removeCategory()"> Remove</md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button ng-click="">
+                  Print
+                  <span class="md-alt-text"></span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+  </md-menu-bar>
+  
+
+    <!-- fine menu' a tendina-->
+<md-tabs md-dynamic-height md-border-bottom class="no-scroll " >
+    <md-tab class="floatSx" ng-repeat="categoria in categoryListCtrl.listaCategorie" label="{{categoria}} " ng-click="categoryListCtrl.selectCategory(categoria)" >
+        <md-tabs md-dynamic-height md-border-bottom class="no-scroll coloreScuro " style="padding-left: 2em;" >
+            <!-- ai vari tag devo dare la lista di items appropriati-->
+             
+            <md-tab    label="Todo">
+                <custom-list categoria= "categoria" items="categoryListCtrl.items  " selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.notDone"></custom-list>
+            </md-tab>
+            <md-tab  label="Done">
+                <custom-list categoria= "categoria" items="categoryListCtrl.items " selected-item="categoryListCtrl.items" filter-function="categoryListCtrl.done"></custom-list>
+            </md-tab>
+            <md-tab  label="All">
+                <custom-list  categoria= "categoria" items="categoryListCtrl.items" selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.All"></custom-list>
+            </md-tab>
+        </md-tabs>
+       
+    </md-tab>
+     <md-button ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
+                        <md-icon> delete </md-icon>
+                    </md-button>
+</md-tabs>
+
+
+
+
+        
+
