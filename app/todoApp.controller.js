@@ -12,19 +12,19 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
 
         vm.selectedItem = null;
         vm.items = storageService.get() || [];
+        vm.item;
         vm.notDone = notDone;
         vm.done = done;
         vm.all = all;
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
-        vm.addTask = addTask;
+
         vm.search = false; //booleano per "barra Search"
         vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
         // variabile per view in formato lista o grid
         vm.view = 'list';
-        vm.setView = setView;
-        vm.addTaskForm = addTaskForm;
-       
+        vm.setView = setView;        
+        
         // lista tabs(categorie)
         
         vm.selectedCategory=null;
@@ -73,7 +73,7 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
         }
 
         //Creates a new item with the given parameters
-        function createItem(title, priority, done, date) {
+        /*function createItem(title, priority, done, date) {
             vm.items.push({
                 title: title,
                 done: done || false,
@@ -98,7 +98,20 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
                 if (result)
                     vm.createItem(result);
             });
+        }*/
+
+        function createItem(ev){
+            taskService.showDialog(ev,vm.listaCategorie).then(function(i){
+                if (i != null )
+                {
+                    vm.item = i;
+                    vm.items.push(vm.item);
+                    storageService.set(vm.items);
+                }
+            });
+            
         }
+
         // rende visivile/invisibile la barra-Search quando si preme l'apposita icona
         function toggleSearch(){
            

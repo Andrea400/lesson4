@@ -4,98 +4,76 @@
     angular.module('todoApp')
             .service('taskService', taskService);
 
-    taskService.$inject = ['$mdPanel','storageService'];
+    taskService.$inject = ['$mdDialog'];
 
-    function taskService($mdPanel, storageService){
+    function taskService($mdDialog){
 
-        var vm = this;
-        vm.tPanel = $mdPanel;
-        vm.item;
-        vm.createItem = createItem;
-       
-        vm.prova = prova;
-        vm.pippo;
-        
-        
-        prova();
-
-        function prova()
-        {
-            console.log("Sono attivo");
-            console.log("tpanel " + vm.tPanel);
-            console.log("item " + vm.item);
-            console.log("pippo " + vm.pippo);
-        
-        }
-
-        
-       
-        
-        function createItem(pippo2){    
-            console.log("sono il servizio ho ricevuto il vettore " + pippo2);
+        this.showDialog = function (ev, categories){
+            return $mdDialog.show({
+                controller: DialogController,
+                controllerAs: 'dialogctrl',
+                bindToController: {
+                    item: 'vm.item',
+                    categ: 'vm.categories',
+                    status: 'vm.status',
+                    prior: 'vm.prior',
+                    mindate: 'vm.mindate'
+                },
+                locals: {
+                    categ: categories,
+                    status: ["Done", "NotDone"],
+                    prior: ["0","1","2"]
+                },
+                templateUrl: 'app/panel.tmpl.html',
+                clickOutsideToClose:true,
+                targetEvent: ev
+            })
+            .then(function(answer){
+                console.log("ANSwer: "+angular.toJson(answer));
+                return answer;
+            }, function (){
+                console.log("Close modal");
             
-            taskCtrl.suca(pippo2);
-
-            vm.position = vm.tPanel.newPanelPosition()
-            .absolute()
-            .center();
-
-            vm.config = {
-            attachTo: angular.element(document.body),
-            controller: TaskController,
-            controllerAs: 'taskCtrl',
-            disableParentScroll: vm.disableParentScroll,
-            templateUrl: 'app/panel.tmpl.html',
-            hasBackdrop: true,
-            position: vm.position,
-            trapFocus: true,
-            zIndex: 2,
-            clickOutsideToClose: true,
-            escapeToClose: true,
-            focusOnOpen: true
+            });
         };
-            
-            vm.tPanel.open(vm.config);
-            console.log("Pippo: "+angular.toJson(vm.pippo));
-        
-        }
 
-        
-
-
-        /*vm.fineInserimento = function(){
-            console.log("Closing panel");
-            tPanel.close();
-        }*/
     }
 
 
-     TaskController.$inject = ['storageService'];
-
-    //Directive controller
-    function TaskController(storageService) {
+    function DialogController ($mdDialog, categ, status, prior)
+    {
         var vm = this;
-        vm.pippo;
-         vm.confirm = confirm;
-         vm.suca=suca;
+        vm.item;
+        vm.categories = categ;
+        vm.status = status;
+        vm.prior = prior;
 
-         function confirm()
+        vm.hide = hide;
+        vm.cancel = cancel;
+        vm.answer = answer;
+        vm.mydate = new Date();
+        vm.mindate = new Date(
+                vm.mydate.getFullYear(),
+                vm.mydate.getMonth(),
+                vm.mydate.getDate());
+
+        function hide()
         {
-            console.log("PRIMA:");
-           
-            
-            //vm.tasksList.push(vm.item);
-           
-            
-        }
+            $mdDialog.hide();
+        };
 
-        function suca(pippa)
+        function cancel()
         {
-            vm.pippo=pippa;
-            console.log("vettore: " + vm.pippo);
+            $mdDialog.cancel();
+        };
 
-        }
-      
+
+        function answer(ans)
+        {
+            console.log("ANS: "+angular.toJson(ans));
+            $mdDialog.hide(ans);
+        };
+
+
     }
-
 })();

@@ -1,61 +1,78 @@
-<div role="dialog" layout="column" layout-align="center center">
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>New Task</h2>
-        </div>
-    </md-toolbar>
+<md-dialog aria-label="add-task">
+    <md-dialog-content class="md-padding">
+        <form name="taskForm" novalidate>
+            <div layout layout-sm="column">
+                
+                <md-input-container class="md-block">
+                    <label>Title</label>
+                    <input required name="titleTask" ng-model="item.title">
+                    <div ng-show="taskForm.$submitted || taskForm.titleTask.$touched">
+                    <div ng-messages="taskForm.titleTask.$error">
+                    <div ng-show="taskForm.titleTask.$error.required">Type the task name.</div>
+                    </div>
+                    </div>
+                </md-input-container>
 
-    <md-content layout-gt-sm="row" layout-padding>
-        <div>
-            <md-input-container>
-                <label>Title</label>
-                <input ng-model="taskCtrl.item.title">
+                <md-input-container>
+                    <label>Description</label>
+                    <input ng-model="item.description">
+                </md-input-container>
+
+                </div>
+            
+            <div layout layout-sm="column">
+
+            <md-input-container class="md-block" flex-gt-sm>
+            <label>Category</label>
+            <md-select ng-model="item.category">
+              <md-option ng-repeat="cat in dialogctrl.categories" value="{{cat}}">
+                {{cat}}
+              </md-option>
+            </md-select>
             </md-input-container>
 
-            <md-input-container>
-                <label>Description</label>
-                <input ng-model="taskCtrl.item.description">
+            <md-input-container class="md-block" flex-gt-sm>
+            <label>Status</label>
+            <md-select ng-model="item.status">
+              <md-option ng-repeat="stat in dialogctrl.status" value="{{stat}}">
+                {{stat}}
+              </md-option>
+            </md-select>
             </md-input-container>
+            </div>
 
-            <md-input-container>
-                <label>Priority</label>
-                <input ng-model="taskCtrl.item.priority">
+            <div layout layout-sm="column">
+
+            <md-input-container class="md-block" flex-gt-sm>
+            <label>Priority</label>
+            <md-select ng-model="item.priority">
+              <md-option ng-repeat="priority in dialogctrl.prior" value="{{priority}}">
+                {{priority}}
+              </md-option>
+            </md-select>
             </md-input-container>
-
+            
             <md-input-container>
                 <label>Tag</label>
-                <input ng-model="taskCtrl.item.tag">
+                <input ng-model="item.tag">
             </md-input-container>
-
-            <md-input-container>
-                <label>Status</label>
-                <input ng-model="taskCtrl.item.status">
-            </md-input-container>
-
+            </div>
             
+           <div layout layout-sm="column">
+
             <md-input-container>
                 <label>Estimated(hours)</label>
-                <input type='number' ng-min='0' ng-model="taskCtrl.item.estimated">
+                <input type='number' ng-min='0' ng-model="item.estimated">
             </md-input-container>
-
-            
-            <md-datepicker ng-model="taskCtrl.item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
-            
-
-
-
-            <div layout="row" layout-align="end">
-                <md-button class="md-raised" aria-label="close" ng-click="">
-                    Close
-                </md-button>
-
-                <md-button class="md-raised" aria-label="add" ng-click="taskCtrl.confirm(taskCtrl.items)">
-                    Add
-                </md-button>
-
-            </div>
-        </div>
-
+               
+                
+            <md-datepicker md-min-date="dialogctrl.mindate" ng-model="item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+              </div> 
+                
+        </form>
     </md-content>
-
-</div>
+    <div class="md-dialog-actions" layout="row"> <span flex></span>
+        <md-button ng-click="dialogctrl.cancel()"> Cancel </md-button>
+        <md-button ng-click="dialogctrl.answer(item)" class="md-primary"> Save </md-button>
+    </div>
+</md-dialog>

@@ -27,7 +27,7 @@
     <script src="app/components/customList.directive.js"></script>
     <script src="app/components/customGrid.directive.js"></script>
     <script src="app/components/categoryList.directive.js"></script>
-      <script src="app/todoItem.service.js"></script>
+    <script src="app/todoItem.service.js"></script>
 
 </head>
 
@@ -73,7 +73,7 @@
                     <!-- direttiva per visionare la lista delle categorie-->
                    <category-list view = "ctrl.view" selected-category="ctrl.selectedCategory" items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone" lista-categorie = "ctrl.listaCategorie"> </category-list>                    
               
-                <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.addTaskForm()">
+                <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.createItem($event)">
                     <md-icon>add</md-icon>
                 </md-button>
             </md-content>
