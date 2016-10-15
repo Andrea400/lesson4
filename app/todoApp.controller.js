@@ -5,9 +5,9 @@
 
     angular.module('todoApp').controller('TodoController', TodoController);
 
-TodoController.$inject = ['storageService','$mdDialog'];
+TodoController.$inject = ['storageService','$mdDialog','taskService'];
     //This is the application controller
-    function TodoController(storageService, $mdDialog) {
+    function TodoController(storageService, $mdDialog, taskService ) {
         var vm = this;
 
         vm.selectedItem = null;
@@ -20,7 +20,10 @@ TodoController.$inject = ['storageService','$mdDialog'];
         vm.addTask = addTask;
         vm.search = false; //booleano per "barra Search"
         vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
-
+        // variabile per view in formato lista o grid
+        vm.view = 'list';
+        vm.setView = setView;
+        vm.addTaskForm = addTaskForm;
        
         // lista tabs(categorie)
         
@@ -114,7 +117,21 @@ TodoController.$inject = ['storageService','$mdDialog'];
                     vm.viewBar=true;
            
         }
-       
+
+        //funzione per settare view (o list o grid)
+        function setView()
+        {
+            if(vm.view== 'list')
+                vm.view= 'apps';
+            else
+                vm.view= 'list';
+        }
+        
+       function addTaskForm()
+       {
+           console.log("sto passando il vettore : " +vm.items);
+           taskService.createItem(vm.items);
+       }
        
     }
 

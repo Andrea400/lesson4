@@ -1,0 +1,61 @@
+<div role="dialog" layout="column" layout-align="center center">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>New Task</h2>
+        </div>
+    </md-toolbar>
+
+    <md-content layout-gt-sm="row" layout-padding>
+        <div>
+            <md-input-container>
+                <label>Title</label>
+                <input ng-model="taskCtrl.item.title">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Description</label>
+                <input ng-model="taskCtrl.item.description">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Priority</label>
+                <input ng-model="taskCtrl.item.priority">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Tag</label>
+                <input ng-model="taskCtrl.item.tag">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Status</label>
+                <input ng-model="taskCtrl.item.status">
+            </md-input-container>
+
+            
+            <md-input-container>
+                <label>Estimated(hours)</label>
+                <input type='number' ng-min='0' ng-model="taskCtrl.item.estimated">
+            </md-input-container>
+
+            
+            <md-datepicker ng-model="taskCtrl.item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+            
+
+
+
+            <div layout="row" layout-align="end">
+                <md-button class="md-raised" aria-label="close" ng-click="">
+                    Close
+                </md-button>
+
+                <md-button class="md-raised" aria-label="add" ng-click="taskCtrl.confirm(taskCtrl.items)">
+                    Add
+                </md-button>
+
+            </div>
+        </div>
+
+    </md-content>
+
+</div>

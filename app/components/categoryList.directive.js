@@ -14,7 +14,7 @@
                 listaCategorie: '=',
                 items: '=',
                 selectedItem: '=',
-                
+                view:'=',
                 selectedCategory:'=',
             },
             controller: categoryListController,
@@ -114,7 +114,9 @@
                     if (result) {
                         
                         vm.listaCategorie.splice(index,1);
+                        clearCategory(vm.selectedCategory);
                         vm.selectedCategory=vm.listaCategorie[index-1];
+                      
                     }
                 });
 
@@ -123,8 +125,27 @@
 
         }
 
-       
+       // fuzione che elimina tutti i task appartenenti ad una certa categoria
+        function clearCategory(categoria)
+        {
+            console.log("elimino ogni singolo task appartenente alla categoria " + categoria);
+            console.log("lunghezza vettore items: " + vm.items.length);
+            for( var i in vm.items)
+            {
+                var item = vm.items[i];
+                if(item.title.toLowerCase() == categoria.toLowerCase())
+                {
+                    console.log("elimino task : " + item.title +  " perche appartiene alla categoria : " + categoria);
+                      var index = vm.items.indexOf(item);
+                      vm.items.splice(index,1);
+                }
+            }
+            console.log("lunghezza vettore items: " + vm.items.length);
+            console.log("lunghezza vettore items: " + angular.toJson(vm.items));
+            storageService.set(vm.items);
 
+
+        }
 
         function notDone(item) {
             return item.done == false;
