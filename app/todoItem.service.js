@@ -21,7 +21,8 @@
                 },
                 locals: {
                     categ: categories,
-                    status: ["Done", "NotDone"],
+                    status: [{key: "NotDone", value: false},
+                             {key: "Done", value: true}],
                     prior: ["0","1","2"]
                 },
                 templateUrl: 'app/panel.tmpl.html',

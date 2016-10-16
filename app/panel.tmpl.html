@@ -1,4 +1,13 @@
 <md-dialog aria-label="add-task">
+        <div class="md-toolbar-tools">
+            <h2>Create Task</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dialogctrl.cancel()" aria-label="Delete">
+                <md-icon> cancel </md-icon>
+            </md-button>
+        </div>
+
+
     <md-dialog-content class="md-padding">
         <form name="taskForm" novalidate>
             <div layout layout-sm="column">
@@ -7,72 +16,76 @@
                     <label>Title</label>
                     <input required name="titleTask" ng-model="item.title">
                     <div ng-show="taskForm.$submitted || taskForm.titleTask.$touched">
-                    <div ng-messages="taskForm.titleTask.$error">
-                    <div ng-show="taskForm.titleTask.$error.required">Type the task name.</div>
-                    </div>
+                    <div style="font-size:70%; color:red" ng-show="taskForm.titleTask.$error.required">Type the task name.</div>
                     </div>
                 </md-input-container>
 
+                <pre>       </pre>
                 <md-input-container>
                     <label>Description</label>
                     <input ng-model="item.description">
                 </md-input-container>
-
                 </div>
             
-            <div layout layout-sm="column">
-
-            <md-input-container class="md-block" flex-gt-sm>
-            <label>Category</label>
-            <md-select ng-model="item.category">
-              <md-option ng-repeat="cat in dialogctrl.categories" value="{{cat}}">
-                {{cat}}
-              </md-option>
-            </md-select>
-            </md-input-container>
-
-            <md-input-container class="md-block" flex-gt-sm>
-            <label>Status</label>
-            <md-select ng-model="item.status">
-              <md-option ng-repeat="stat in dialogctrl.status" value="{{stat}}">
-                {{stat}}
-              </md-option>
-            </md-select>
-            </md-input-container>
-            </div>
-
-            <div layout layout-sm="column">
-
-            <md-input-container class="md-block" flex-gt-sm>
-            <label>Priority</label>
-            <md-select ng-model="item.priority">
-              <md-option ng-repeat="priority in dialogctrl.prior" value="{{priority}}">
-                {{priority}}
-              </md-option>
-            </md-select>
-            </md-input-container>
-            
-            <md-input-container>
-                <label>Tag</label>
-                <input ng-model="item.tag">
-            </md-input-container>
-            </div>
-            
-           <div layout layout-sm="column">
-
-            <md-input-container>
-                <label>Estimated(hours)</label>
-                <input type='number' ng-min='0' ng-model="item.estimated">
-            </md-input-container>
-               
+                <div layout layout-sm="column">
                 
-            <md-datepicker md-min-date="dialogctrl.mindate" ng-model="item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
-              </div> 
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Category</label>
+                    <md-select ng-model="item.category">
+                    <md-option ng-repeat="(i,cat) in dialogctrl.categories" value="{{cat}}"
+                        ng-selected="i == 0 ? true:false">
+                        {{cat}}
+                    </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <pre>       </pre>
+                <md-input-container class="md-block" flex-gt-sm>
+                <label>Status</label>
+                <md-select ng-model="item.done">
+                <md-option ng-repeat="(i, stat) in dialogctrl.status" value="{{stat.value}}"
+                    ng-selected="i == 0 ? true:false">
+                    {{stat.key}}
+                </md-option>
+                </md-select>
+                </md-input-container>
+                </div>
+
+                <div layout layout-sm="column">
+                
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Priority</label>
+                    <md-select ng-model="item.priority">
+                    <md-option ng-repeat="(i,priority) in dialogctrl.prior" value="{{priority}}"
+                        ng-selected="i == 0 ? true:false">
+                        {{priority}}
+                    </md-option>
+                    </md-select>
+                </md-input-container>
+            
+                <pre>       </pre>
+                <md-input-container>
+                    <label>Tags</label>
+                    <input ng-model="item.tags" ng-list=",">
+                    <div style="font-size:70%"> Type comma separated tags.</div>
+                </md-input-container>
+                </div>
+            
+                <div layout layout-sm="column" div class="md-inline-form">
+                <md-input-container>
+                    <label>Estimated(hours)</label>
+                    <input type='number' ng-min='0' ng-model="item.estimated">
+                </md-input-container>
+               
+               <pre>       </pre>
+               <md-datepicker md-min-date="dialogctrl.mindate" ng-model="item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+                </div> 
                 
         </form>
     </md-content>
+    
     <div class="md-dialog-actions" layout="row"> <span flex></span>
         <md-button ng-click="dialogctrl.cancel()"> Cancel </md-button>
-        <md-button ng-click="dialogctrl.answer(item)" class="md-primary"> Save </md-button>
+        <md-button ng-disabled="taskForm.$invalid" ng-click="dialogctrl.answer(item)" class="md-primary"> Save </md-button>
     </div>
 </md-dialog>
