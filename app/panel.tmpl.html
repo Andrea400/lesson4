@@ -14,7 +14,7 @@
                 
                 <md-input-container class="md-block">
                     <label>Title</label>
-                    <input required name="titleTask" ng-model="item.title">
+                    <input required name="titleTask" ng-model="dialogctrl.item.title">
                     <div ng-show="taskForm.$submitted || taskForm.titleTask.$touched">
                     <div style="font-size:70%; color:red" ng-show="taskForm.titleTask.$error.required">Type the task name.</div>
                     </div>
@@ -23,7 +23,7 @@
                 <pre>       </pre>
                 <md-input-container>
                     <label>Description</label>
-                    <input ng-model="item.description">
+                    <input ng-model="dialogctrl.item.description">
                 </md-input-container>
                 </div>
             
@@ -31,7 +31,7 @@
                 
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Category</label>
-                    <md-select ng-model="item.category">
+                    <md-select ng-model="dialogctrl.item.category">
                     <md-option ng-repeat="(i,cat) in dialogctrl.categories" value="{{cat}}"
                         ng-selected="i == 0 ? true:false">
                         {{cat}}
@@ -42,7 +42,7 @@
                 <pre>       </pre>
                 <md-input-container class="md-block" flex-gt-sm>
                 <label>Status</label>
-                <md-select ng-model="item.done">
+                <md-select ng-model="dialogctrl.item.done">
                 <md-option ng-repeat="(i, stat) in dialogctrl.status" value="{{stat.value}}"
                     ng-selected="i == 0 ? true:false">
                     {{stat.key}}
@@ -55,7 +55,7 @@
                 
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Priority</label>
-                    <md-select ng-model="item.priority">
+                    <md-select ng-model="dialogctrl.item.priority">
                     <md-option ng-repeat="(i,priority) in dialogctrl.prior" value="{{priority}}"
                         ng-selected="i == 0 ? true:false">
                         {{priority}}
@@ -66,7 +66,7 @@
                 <pre>       </pre>
                 <md-input-container>
                     <label>Tags</label>
-                    <input ng-model="item.tags" ng-list=",">
+                    <input ng-model="dialogctrl.item.tags" ng-list=",">
                     <div style="font-size:70%"> Type comma separated tags.</div>
                 </md-input-container>
                 </div>
@@ -74,11 +74,11 @@
                 <div layout layout-sm="column" div class="md-inline-form">
                 <md-input-container>
                     <label>Estimated(hours)</label>
-                    <input type='number' ng-min='0' ng-model="item.estimated">
+                    <input type='number' ng-min='0' ng-model="dialogctrl.item.estimated">
                 </md-input-container>
                
                <pre>       </pre>
-               <md-datepicker md-min-date="dialogctrl.mindate" ng-model="item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+               <md-datepicker md-min-date="dialogctrl.mindate" ng-model="dialogctrl.item.date" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
                 </div> 
                 
         </form>
@@ -86,6 +86,6 @@
     
     <div class="md-dialog-actions" layout="row"> <span flex></span>
         <md-button ng-click="dialogctrl.cancel()"> Cancel </md-button>
-        <md-button ng-disabled="taskForm.$invalid" ng-click="dialogctrl.answer(item)" class="md-primary"> Save </md-button>
+        <md-button ng-disabled="taskForm.$invalid" ng-click="dialogctrl.answer(dialogctrl.item)" class="md-primary"> Save </md-button>
     </div>
 </md-dialog>

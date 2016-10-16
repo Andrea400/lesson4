@@ -8,7 +8,7 @@
 
     function taskService($mdDialog){
 
-        this.showDialog = function (ev, categories){
+        this.showDialog = function (ev, categories, item){
             return $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'dialogctrl',
@@ -20,10 +20,11 @@
                     mindate: 'vm.mindate'
                 },
                 locals: {
+                    item: item,
                     categ: categories,
                     status: [{key: "NotDone", value: false},
                              {key: "Done", value: true}],
-                    prior: ["0","1","2"]
+                    prior: [-1, 0, 1]
                 },
                 templateUrl: 'app/panel.tmpl.html',
                 clickOutsideToClose:true,
@@ -41,10 +42,10 @@
     }
 
 
-    function DialogController ($mdDialog, categ, status, prior)
+    function DialogController ($mdDialog, categ, status, prior, item)
     {
         var vm = this;
-        vm.item;
+        vm.item = item;
         vm.categories = categ;
         vm.status = status;
         vm.prior = prior;
