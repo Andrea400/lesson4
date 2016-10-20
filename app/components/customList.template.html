@@ -1,7 +1,7 @@
-  <md-content class="md-padding scroll tab-content coloreScuro ">
+ <md-content class="md-padding scroll tab-content coloreScuro ">
      
        <md-list >
-           <md-list-item class="md-2-line" ng-repeat="item in customListCtrl.items | filter: customListCtrl.filterFunction |filter: { title: customListCtrl.categoria}" ng-class="customListCtrl.selectedItem == item ? 'selected':''" ng-click="customListCtrl.toggleSelection(item)">
+           <md-list-item class="md-2-line" ng-repeat="item in customListCtrl.items | filter: customListCtrl.filterFunction |filter: { category : customListCtrl.categoria}" ng-class="customListCtrl.selectedItem == item ? 'selected':''" ng-click="customListCtrl.toggleSelection(item)">
                
    
                <md-button ng-click="customListCtrl.changePriority(item)" class="md-icon-button" aria-label="Priority">
@@ -23,3 +23,4 @@
            </md-list-item>
        </md-list>
    </md-content>
+    

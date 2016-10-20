@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,22 +6,27 @@
         .directive('customList', customList);
 
     customList.$inject = [];
-    
+
     function customList() {
+
         return {
-            scope: {},
-            bindToController: {
+            scope: {
                 items: '=',
                 selectedItem: '=',
                 filterFunction: '=',
                 categoria: '='
             },
+            templateUrl: function (element, attribute) {
+                console.log("prova: " + attribute.type);
+                return 'app/components/' + attribute.type + '.template.html';
+            },
+
+            bindToController: true,
             controller: customListController,
             controllerAs: 'customListCtrl',
-            transclude: true,
-            restrict: 'E',
-            //usa il templateUrl
-            templateUrl: 'app/components/customList.template.html'
+
+            restrict: 'A',
+
         };
     }
 
@@ -29,11 +34,13 @@
     customListController.$inject = ['storageService'];
 
     //Directive controller
-    function customListController(storageService) {
+    function customListController($scope, storageService) {
         var vm = this;
         vm.changePriority = changePriority;
         vm.checkStateChanged = checkStateChanged;
         vm.toggleSelection = toggleSelection;
+
+
 
         //Changes the priority of the given item
         function changePriority(item) {
@@ -46,7 +53,7 @@
         }
 
         //Occurs when the status of an items changes
-       function checkStateChanged() {
+        function checkStateChanged() {
             storageService.set(vm.items);
         }
 
