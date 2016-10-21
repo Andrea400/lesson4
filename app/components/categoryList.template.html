@@ -13,8 +13,6 @@
                       <md-menu-divider></md-menu-divider>
                     <md-menu-item><md-button ng-click="categoryListCtrl.addCategory($event)">Category</md-button></md-menu-item>
                     <md-menu-divider></md-menu-divider>
-                    <md-menu-item><md-button ng-click="">Task</md-button></md-menu-item>
-                    <md-menu-divider></md-menu-divider>
                   </md-menu-content>
                 </md-menu>
               </md-menu-item>
@@ -24,8 +22,8 @@
                   <span class="md-alt-text"> </span>
                 </md-button>
               </md-menu-item>
-              <md-menu-item> <md-button disabled="disabled" ng-click=""> Rename</md-button></md-menu-item>
-              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null"  ng-click="categoryListCtrl.removeCategory()"> Remove</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null" ng-click=""> Rename Category</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null"  ng-click="categoryListCtrl.removeCategory()"> Remove Category</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
                 <md-button ng-click="">
@@ -43,17 +41,18 @@
 <md-tabs md-dynamic-height md-border-bottom class="no-scroll " >
     <md-tab class="floatSx" ng-repeat="categoria in categoryListCtrl.listaCategorie" label="{{categoria}} " ng-click="categoryListCtrl.selectCategory(categoria)" >
         <md-tabs md-dynamic-height md-border-bottom class="no-scroll coloreScuro " style="padding-left: 2em;" >
-          <md-tab    label="Todo">
-                <div custom-list type = "customList"  ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria" items="categoryListCtrl.items  " selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.notDone"></div>
-                 <div custom-list  type = "customGrid"  ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria" items="categoryListCtrl.items" selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.notDone"></div>
+         <md-tab    label="Todo">
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.notDone"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.notDone"></div>
             </md-tab>
             <md-tab  label="Done">
-                <div custom-list  type = "customList"  ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria" items="categoryListCtrl.items " selected-item="categoryListCtrl.selectedItems" filter-function="categoryListCtrl.done"></div>
-                 <div custom-list  type = "customGrid"  ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria" items="categoryListCtrl.items" selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.done"></div>
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.done"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.done"></div>
             </md-tab>
             <md-tab  label="All">
-                <div custom-list  type = "customList"  ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria" items="categoryListCtrl.items" selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.All"></div>
-                <div custom-list  type = "customGrid"  ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria" items="categoryListCtrl.items" selected-item="categoryListCtrl.selectedItem" filter-function="categoryListCtrl.All"></div>
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.All"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.All"></div>
+            
             </md-tab>
         </md-tabs>       
     </md-tab>    

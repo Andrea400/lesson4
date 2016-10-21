@@ -9,102 +9,13 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
     //This is the application controller
     function TodoController(storageService, $mdDialog, taskService ) {
         var vm = this;
-
-        vm.selectedItem = null;
-        vm.items = storageService.get() || [];
-        vm.item;
-        vm.notDone = notDone;
-        vm.done = done;
-        vm.all = all;
-        vm.deleteItem = deleteItem;
-        vm.createItem = createItem;
-        vm.editItem = editItem;
-
         vm.search = false; //booleano per "barra Search"
         vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
         // variabile per view in formato lista o grid
         vm.view = 'list';
         vm.setView = setView;        
-        
-        // lista tabs(categorie)
-        
-        vm.selectedCategory=null;
-        vm.listaCategorie=[
-                         "Sport", 
-                         "Teatro",
-                         "Studio",
-        ]
+          
        
-       
-
-        function notDone(item) {
-            return item.done == false;
-        }
-
-        function done(item) {
-            return item.done == true;
-        }
-
-        function all(item) {
-            return true;
-        }
-
-        //Delete the current selected item, if any
-        function deleteItem(ev) {
-
-            if (vm.selectedItem != null) {
-                var confirm = $mdDialog.confirm()
-
-                .textContent('The task "' + vm.selectedItem.title + '" will be deleted. Are you sure?')
-                    .ariaLabel('Delete task')
-                    .targetEvent(ev)
-                    .ok('Yes')
-                    .cancel('No');
-
-                $mdDialog.show(confirm).then(function(result) {
-                    if (result) {
-                        var index = vm.items.indexOf(vm.selectedItem);
-                        if (index != -1) {
-                            vm.items.splice(index, 1);
-                            storageService.set(vm.items);
-                        }
-                    }
-                });
-            }
-        }
-
-
-        function createItem(ev){
-            taskService.showDialog(ev,vm.listaCategorie).then(function(i){
-                if (i != null )
-                {
-                    vm.item = i;
-                    vm.items.push(vm.item);
-                    storageService.set(vm.items);
-                }
-            });
-            
-        }
-
-
-        function editItem(ev){
-            
-            if (vm.selectedItem != null) {
-                taskService.showDialog(ev, vm.listaCategorie, vm.selectedItem).then(function(i){
-                if (i != null )
-                {
-                    var index = vm.items.indexOf(vm.selectedItem);
-                        if (index != -1) {
-                            vm.items.splice(index, 1);
-                            vm.items.push(i);
-
-                            //storageService.set(vm.items);
-                        }
-                }
-            });
-            }
-        }
-
         // rende visivile/invisibile la barra-Search quando si preme l'apposita icona
         function toggleSearch(){
            

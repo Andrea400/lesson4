@@ -117,7 +117,9 @@
 
         //Saves the value to the session storage
         function set(value) {
+            console.log("ServiceStorage : set " + value);
             $window.localStorage.setItem("taskStorage", angular.toJson(value));
+            console.log("ServiceStorage : salvataggio effettuato");
         }
         
     }

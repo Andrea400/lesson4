@@ -58,9 +58,7 @@
                     </md-button>
 
 
-                    <md-button ng-disabled="ctrl.selectedItem == null" ng-click="ctrl.deleteItem()" class="md-icon-button" aria-label="Delete">
-                        <md-icon> delete </md-icon>
-                    </md-button>
+                    
 
                     
                 </div>
@@ -72,11 +70,9 @@
              <!-- lista delle categorie-->
 
                     <!-- direttiva per visionare la lista delle categorie-->
-                   <category-list view = "ctrl.view" selected-category="ctrl.selectedCategory" items="ctrl.items" selected-item="ctrl.selectedItem" filter-function="ctrl.notDone" lista-categorie = "ctrl.listaCategorie"> </category-list>                    
+                   <category-list view = "ctrl.view" selected-category="ctrl.selectedCategory" selected-item="ctrl.selectedItem" lista-categorie = "ctrl.listaCategorie"> </category-list>                    
               
-                <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="ctrl.createItem($event)">
-                    <md-icon>add</md-icon>
-                </md-button>
+               
         </div>
        
     </div>

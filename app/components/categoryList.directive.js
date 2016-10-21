@@ -11,11 +11,12 @@
         return {
             scope: {},
             bindToController: {
-                listaCategorie: '=',
-                items: '=',
+               // listaCategorie: '=',
+               // items: '=',
                 selectedItem: '=',
                 view:'=',
-                selectedCategory:'=',
+                //selectedCategory:'=',
+            
             },
             controller: categoryListController,
             controllerAs: 'categoryListCtrl',
@@ -32,6 +33,13 @@
     //Directive controller
     function categoryListController(storageService, $mdDialog) {
         var vm = this;
+        vm.items =  [];
+        vm.selectedCategory=null;
+        vm.listaCategorie=[
+                         "Sport", 
+                         "Teatro",
+                         "Studio",
+        ]
         vm.selectedCategory = vm.listaCategorie[0];
         vm.selectCategory = selectCategory;
         vm.addCategory = addCategory;
