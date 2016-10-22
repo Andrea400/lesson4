@@ -1,50 +1,50 @@
-<div class='md-padding scroll' layout="row" layout-wrap >
-  <md-button class="md-fab md-primary " aria-label="Add Todo" ng-click="customListCtrl.createItem($event)">
-                    <md-icon>search</md-icon>
-                </md-button>
-     <div   flex="30" flex-sm="50" flex-gt-xs="30" class="prova"  ng-repeat="item in customListCtrl.items | filter: customListCtrl.filterFunction |filter: { category: customListCtrl.categoria} ">
-    <md-card   >
-  <md-button ng-click="customListCtrl.toggleSelection(item)" ng-class="customListCtrl.selectedItem == item ? 'selected':''">
-     <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{item.title}}</span>
-        <span class="md-subhead">Tell us a little about you.</span>
-      </md-card-title-text>
-    </md-card-title>
-     <md-divider></md-divider>
-      <md-card-content>
-        
-         <span>Data inizio task: {{item.date | date: "dd-MM-yyyy HH:mm"}}</span> 
-         <div> Tempo stimato:  {{item.estimated}} ore</div>
-          <md-divider></md-divider>
-           <span>Fatto : {{item.done}}</span>
-         <p>description: {{item.description}} </p>
-</md-button>
-          <md-divider></md-divider>
-         <md-card-actions layout="row" >
-          <md-button ng-click="customListCtrl.changePriority(item)" class="md-icon-button" aria-label="Priority">
-                   <md-icon style="color: green" ng-if="item.priority == -1">low_priority</md-icon>
-                   <md-icon ng-if="item.priority == 0">label</md-icon>
-                   <md-icon style="color: red" ng-if="item.priority == 1">priority_high</md-icon>
-          </md-button>
-          <md-button ng-click="customListCtrl.editItem(item)" ><md-icon>edit</md-icon></md-button>
-          
-          <md-button  ng-click="customListCtrl.deleteItem(item)" class="md-icon-button" aria-label="Delete">
-                        <md-icon> delete </md-icon>
-          </md-button>
-          <md-checkbox ng-model="item.done" ng-change="customListCtrl.checkStateChanged(item)" class="md-primary md-align-top-right">
-          </md-checkbox>
-
-         </md-card-actions>
-      </md-card-content>
-     
-    </md-card>
-
+<div class='md-padding scroll' layout="row" layout-wrap >                                                                                                            
+  <!--
+     <div   flex="30" flex-sm="50" flex-gt-xs="30" class="prova"  ng-repeat="item in customListCtrl.items | filter:  customListCtrl.filterFunction  | filter: { category: customListCtrl.categoria}  |filter: {title: customListCtrl.imputSearch} ">
+-->
+     <div flex="30" flex-sm="50" flex-gt-xs="30" class="scroll"  ng-repeat="item in customListCtrl.items |  myFilter: customListCtrl.imputSearch : customListCtrl.categoria : customListCtrl.filterFunction ">
+            <md-card>
+                  <md-button ng-click="customListCtrl.toggleSelection(item)" ng-class="customListCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+                    <md-card-title>
+                      <md-card-title-text>
+                        <span class="md-headline coloreScuro">{{item.title}}</span>
+                        <span class="md-subhead coloreScuro">Category : {{item.category}}</span>
+                      </md-card-title-text>
+                    </md-card-title>
+                    <md-divider></md-divider>
+                    <md-card-content>
+                        <span>Data inizio task: {{item.date | date: "dd-MM-yyyy HH:mm"}}</span> 
+                        <div> Tempo stimato:  {{item.estimated}} ore</div>
+                          <md-divider></md-divider>
+                          <span>Fatto : {{item.done}} </span>
+                        <p>description: {{item.description}} </p>
+                        </md-button>
+                        <md-divider></md-divider>
+                        
+                      <md-card-actions layout="row"    class="left" >
+                            <md-checkbox  ng-model="item.done"  ng-change="customListCtrl.checkStateChanged(item)" class="md-primary left "> 
+                                  Done?
+                                </md-checkbox>  
+                            <md-button ng-click="customListCtrl.changePriority(item)" class="md-icon-button" aria-label="Priority">
+                                    <md-icon style="color: green" ng-if="item.priority == -1">low_priority</md-icon>
+                                    <md-icon ng-if="item.priority == 0">label</md-icon>
+                                    <md-icon style="color: red" ng-if="item.priority == 1">priority_high</md-icon>
+                            </md-button>
+                            <md-button ng-click="customListCtrl.editItem(item)" >
+                                  <md-icon>edit</md-icon>
+                            </md-button>
+                            
+                            <md-button  ng-click="customListCtrl.deleteItem(item)" class="md-icon-button" aria-label="Delete">
+                                          <md-icon> delete </md-icon>
+                            </md-button>
+                      </md-card-actions>
+                  </md-card-content>     
+            </md-card>
      </div>
    
-     <md-button class="md-fab md-primary " aria-label="Add Todo" ng-click="customListCtrl.createItem($event)">
+     <md-button class="md-fab md-primary  add-button" aria-label="Add Todo" ng-click="customListCtrl.createItem($event)">
                     <md-icon>add</md-icon>
-                </md-button>
+      </md-button>
   </div>
 
    

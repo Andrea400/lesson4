@@ -3,9 +3,12 @@
 
     angular
         .module('todoApp')
-        .directive('customList', customList);
+        .directive('customList', customList)
+        
+    
+        
 
-    customList.$inject = ['storageService', '$mdDialog','taskService'];
+    customList.$inject = ['storageService','$mdDialog','taskService'];
 
     function customList(storageService, $mdDialog, taskService) {
 
@@ -16,10 +19,10 @@
                 filterFunction: '=',
                 categoria: '=',
                 listaCategorie: '=',
+                imputSearch:'='
                
             },
             templateUrl: function (element, attribute) {
-                console.log("prova: " + attribute.type);
                 return 'app/components/' + attribute.type + '.template.html';
             },
 
@@ -43,16 +46,13 @@
         vm.toggleSelection = toggleSelection;
         vm.editItem = editItem;
 
-         vm.selectedItem = null;
+         vm.selectedItems = [];
         
         vm.item;
-        vm.notDone = notDone;
-        vm.done = done;
-        vm.all = all;
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.editItem = editItem;
-
+        vm.attuareFiltro = true;
 
         //Changes the priority of the given item
         function changePriority(item) {
@@ -73,34 +73,18 @@
 
         //Select or deselect the given item
         function toggleSelection(item) {
-            if (vm.selectedItem == null || vm.selectedItem != item)
-                vm.selectedItem = item;
-            else
-                vm.selectedItem = null;
+           var index = vm.selectedItems.indexOf(item);
+           if(index!=-1){
+               //l'elemento è già selezionato quindi lo deseleziono
+               vm.selectedItems.splice(index,1);
+           }else{
+            // l'elemento non è ancora selezionato quindi lo seleziono
+                vm.selectedItems.push(item);
+           }
+  console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
         }
-        function editItem(item)
-        {
-            
-            vm.edit(item);
-        }
-
-
-        function notDone(item) {
-            return item.done == false;
-        }
-
-        function done(item) {
-            return item.done == true;
-        }
-
-        function all(item) {
-            return true;
-        }
-
-
-
-
-        
+               
+       
         //Delete the current selected item, if any
         function deleteItem(item,ev) {
             console.log("entrato in deleteItem" + item.title);
@@ -159,4 +143,11 @@
 
         
     }
+
+
+
+
+
+
+
 })();

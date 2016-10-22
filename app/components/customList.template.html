@@ -1,9 +1,10 @@
  <md-content class="md-padding scroll tab-content coloreScuro ">
      
        <md-list >
-           <md-list-item class="md-2-line" ng-repeat="item in customListCtrl.items | filter: customListCtrl.filterFunction |filter: { category : customListCtrl.categoria}" ng-class="customListCtrl.selectedItem == item ? 'selected':''" ng-click="customListCtrl.toggleSelection(item)">
-               
-   
+          <!-- <md-list-item class="md-2-line" ng-repeat="item in customListCtrl.items | filter: customListCtrl.filterFunction |filter: { category : customListCtrl.categoria}" ng-class="customListCtrl.selectedItem == item ? 'selected':''" ng-click="customListCtrl.toggleSelection(item)">
+               -->
+            <md-list-item class="md-2-line" ng-repeat="item in customListCtrl.items |  myFilter: customListCtrl.imputSearch : customListCtrl.categoria : customListCtrl.filterFunction " ng-class="customListCtrl.selectedItems.indexOf(item)!=-1? 'selected':''" ng-click="customListCtrl.toggleSelection(item)">
+
                <md-button ng-click="customListCtrl.changePriority(item)" class="md-icon-button" aria-label="Priority">
                    <md-icon style="color: green" ng-if="item.priority == -1">low_priority</md-icon>
                    <md-icon ng-if="item.priority == 0">label</md-icon>
@@ -20,7 +21,8 @@
                     <md-button  ng-click="customListCtrl.deleteItem(item)" class="md-icon-button" aria-label="Delete">
                         <md-icon> delete </md-icon>
                      </md-button>
-               <md-checkbox  aria-label= "label" ng-model="item.done" ng-change="customListCtrl.checkStateChanged(item)" class="md-primary md-align-top-right">
+               <md-checkbox  aria-label= "label {{item.title}}" ng-model="item.done" ng-change="customListCtrl.checkStateChanged(item)" class="md-primary md-align-top-right">
+                   Done?
                </md-checkbox>
                <md-divider></md-divider>
            </md-list-item>

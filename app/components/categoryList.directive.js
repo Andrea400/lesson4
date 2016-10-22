@@ -11,11 +11,10 @@
         return {
             scope: {},
             bindToController: {
-               // listaCategorie: '=',
-               // items: '=',
                 selectedItem: '=',
                 view:'=',
                 //selectedCategory:'=',
+                inputSearch:'='
             
             },
             controller: categoryListController,
@@ -44,11 +43,11 @@
         vm.selectCategory = selectCategory;
         vm.addCategory = addCategory;
         vm.removeCategory= removeCategory;
-       
+        vm.renameCategory = renameCategory;
 
-        vm.notDone = notDone;
-        vm.done = done;
-        vm.all = all;
+        vm.notDone = "notDone";
+        vm.done = "done";
+        vm.all = "all";
          
         function selectCategory (nome)
         {
@@ -98,10 +97,62 @@
                 }
                 
             });
-
-
-
         }
+
+
+        function renameCategory(ev){
+            console.log("categoria selezionata: " + vm.selectedCategory);
+            var index = vm.listaCategorie.indexOf(vm.selectedCategory);
+            console.log("categoria esistente? : " + index);
+            if(index!= -1)
+            {   
+                         var confirm = $mdDialog.prompt()
+                .title('Rename Category ' + vm.selectedCategory)
+                .placeholder('Your category title...')
+                .ariaLabel('Your category title...')
+                .targetEvent(ev)
+                .ok('Add')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function(categoria) {
+                if (categoria){
+
+                    var confirm = $mdDialog.confirm()
+                    .textContent('The category "' + vm.selectedCategory + '" will be renamed to "' + categoria+ '". Are you sure?')
+                    .ariaLabel('Delete task')
+                    .targetEvent(ev)
+                    .ok('Yes')
+                    .cancel('No');
+
+                $mdDialog.show(confirm).then(function(result) {
+                    if (result) {
+                        
+                     
+                        console.log("Nuovo nome:  " + categoria);
+                        console.log("Vecchio nome: " + vm.selectedCategory);
+                        vm.listaCategorie[index]= categoria;
+                      
+                        // cambiare attr category a tutti i task della categoria modificata
+                        for(var i in vm.items)
+                        {
+                            if(vm.items[i].category.toLowerCase() == vm.selectedCategory.toLowerCase())
+                               vm.items[i].category =  categoria;
+                        }
+                          vm.selectedCategory = categoria;
+                         console.log("finito:  " + vm.listaCategorie);
+                      
+                    }
+                });
+                           
+
+                }
+                
+            });
+
+            }
+        }
+
+
 
         function removeCategory(ev){
             console.log("categoria selezionata: " + vm.selectedCategory);
@@ -155,17 +206,7 @@
 
         }
 
-        function notDone(item) {
-            return item.done == false;
-        }
-
-        function done(item) {
-            return item.done == true;
-        }
-
-        function all(item) {
-            return true;
-        }
+       
        
     }
 })();

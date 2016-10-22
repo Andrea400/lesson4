@@ -6,6 +6,7 @@
     angular.module('todoApp').controller('TodoController', TodoController);
 
 TodoController.$inject = ['storageService','$mdDialog','taskService'];
+
     //This is the application controller
     function TodoController(storageService, $mdDialog, taskService ) {
         var vm = this;
@@ -14,13 +15,15 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
         // variabile per view in formato lista o grid
         vm.view = 'list';
         vm.setView = setView;        
-          
+        vm.inputSearch='';
        
         // rende visivile/invisibile la barra-Search quando si preme l'apposita icona
         function toggleSearch(){
            
-           if(vm.search) 
+           if(vm.search) {
                 vm.search=false;
+                vm.inputSearch = '';
+           }
            else 
                 vm.search=true;
         }
