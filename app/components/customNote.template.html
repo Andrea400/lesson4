@@ -1,0 +1,68 @@
+    <!-- menu' a tendina-->
+
+<md-menu-bar class="floatSx">
+          <md-menu>
+            <button ng-click="$mdOpenMenu()">
+              <md-icon>menu</md-icon>
+            </button>
+            <md-menu-content>
+              <md-menu-item>
+                <md-menu>
+                  <md-button ng-click="$mdOpenMenu()">New</md-button>
+                  <md-menu-content>
+                      <md-menu-divider></md-menu-divider>
+                    <md-menu-item><md-button ng-click="categoryListCtrl.addCategory($event)">Note</md-button></md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                  </md-menu-content>
+                </md-menu>
+              </md-menu-item>
+             
+              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null" ng-click="categoryListCtrl.renameCategory()"> Rename Note</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null"  ng-click="categoryListCtrl.removeCategory()"> Remove Note</md-button></md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              
+            </md-menu-content>
+          </md-menu>
+  </md-menu-bar>
+
+
+ <md-content class="no-scroll">
+        <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
+          <md-tab label="Note">
+                <md-content class="md-padding scroll tab-content" layout="row" layout-wrap >
+                        <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customNoteCtrl.items">
+                              <md-card>
+                                <md-button ng-click="customNoteCtrl.toggleSelection(item)" ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+                                  <md-card-title>
+                                    <md-card-title-text>
+                                      <span class="md-headline coloreScuro">{{item}}</span>
+                                      <span class="md-subhead coloreScuro">Data creazione task: {{item}}</span>
+                                    </md-card-title-text>
+                                  </md-card-title>
+                                  <md-divider></md-divider>
+                                  <md-card-content>
+                                      <p>description: {{item}} </p>
+                                      </md-button>
+                                      <md-divider></md-divider>
+                                      
+                                    <md-card-actions layout="row"    class="left" >
+                                          <md-button  ng-disabled="customNoteCtrl.selectedItems.indexOf(item) == -1" ng-click="customNoteCtrl.editItem($event)" class="md-icon-button" aria-label="Delete" >
+                                                <md-icon>edit</md-icon>
+                                          </md-button>
+                                          
+                                          <md-button  ng-disabled="customNoteCtrl.selectedItems.indexOf(item) == -1"  ng-click="customNoteCtrl.deleteItem($event)" class="md-icon-button" aria-label="Delete">
+                                                        <md-icon> delete </md-icon>
+                                          </md-button>
+                                    </md-card-actions>
+                                </md-card-content>     
+                          </md-card>
+                  </div>
+                
+                  <md-button class="md-fab md-primary add-button" aria-label="Add Todo" ng-click="customNoteCtrl.createItem($event)">
+                                  <md-icon>add</md-icon>
+                    </md-button>
+                </md-content>
+          </md-tab>
+        </md-tabs>                
+  </md-content>
+

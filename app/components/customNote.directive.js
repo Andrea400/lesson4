@@ -3,75 +3,46 @@
 
     angular
         .module('todoApp')
-        .directive('customList', customList)
+        .directive('customNote', customNote)
         
     
         
 
-    customList.$inject = ['storageService','$mdDialog','taskService'];
+    customNote.$inject = ['storageService','$mdDialog','taskService'];
 
-    function customList(storageService, $mdDialog, taskService) {
+    function customNote(storageService, $mdDialog, taskService) {
 
         return {
             scope: {
-                 items: '=',
-                //selectedItem: '=',
-                filterFunction: '=',
-                categoria: '=',
-                listaCategorie: '=',
-                imputSearch:'='
-               
             },
             templateUrl: function (element, attribute) {
-                return 'app/components/' + attribute.type + '.template.html';
+                return 'app/components/customNote.template.html';
             },
 
             bindToController: true,
-            controller: customListController,
-            controllerAs: 'customListCtrl',
+            controller: customNoteController,
+            controllerAs: 'customNoteCtrl',
 
-          restrict: 'E',
+            restrict: 'E',
 
         };
     }
 
 
-    customListController.$inject = ['storageService','taskService','$mdDialog'];
+    customNoteController.$inject = ['storageService','taskService','$mdDialog'];
 
     //Directive controller
-    function customListController( storageService, taskService,  $mdDialog, $scope) {
+    function customNoteController( storageService, taskService,  $mdDialog, $scope) {
         var vm = this;
-        vm.changePriority = changePriority;
-        vm.checkStateChanged = checkStateChanged;
-        vm.toggleSelection = toggleSelection;
-        vm.editItem = editItem;
-
-        vm.selectedItems = [];
-        
-        vm.item;
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.editItem = editItem;
-        vm.attuareFiltro = true;
+        vm.toggleSelection = toggleSelection;
+        vm.selectedItems =[];
+        vm.items =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,156];
 
-        //Changes the priority of the given item
-        function changePriority(item) {
-            if (item.priority <= 0)
-                item.priority++;
-            else
-                item.priority = -1;
 
-            storageService.updateTask(item);
-        }
 
-        //Occurs when the status of an items changes
-        function checkStateChanged(item) {
-            console.log("custionListCtrl: richiamata checkStateChanged ");
-            console.log("custionListCtrl: salvataggio: " + vm.items);
-            storageService.updateTask(item);
-        }
-
-        //Select or deselect the given item
         function toggleSelection(item) {
            var index = vm.selectedItems.indexOf(item);
            if(index!=-1){
@@ -83,10 +54,9 @@
            }
             console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
         }
-               
-       
-        //Delete the current selected items, if any
-        function deleteItem(ev) {
+
+
+         function deleteItem(ev) {
             if (vm.selectedItems != null && vm.selectedItems.length > 0) {
                 var confirm = $mdDialog.confirm()
 
@@ -169,7 +139,10 @@
         }
 
         
+    
+
+
+
+
     }
-
-
 })();

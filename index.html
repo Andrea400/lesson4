@@ -29,6 +29,7 @@
     <script src="app/components/customList.directive.js"></script>
     <script src="app/components/customGrid.directive.js"></script>
     <script src="app/components/categoryList.directive.js"></script>
+    <script src="app/components/customNote.directive.js"></script>
     <script src="app/todoItem.service.js"></script>
      <script src="app/components/custumList.filter.js"></script>
 
@@ -45,6 +46,9 @@
                         <span>App</span>
                     </h2>
                     <span flex></span>
+                        <md-button ng-click="ctrl.toggleNoteTask()" class="md-button" aria-label="Note">
+                       {{ctrl.noteTask}}
+                    </md-button> 
 
                        <md-button ng-click="ctrl.toggleSearch()" class="md-icon-button" aria-label="Search">
                         <md-icon> search </md-icon>
@@ -69,8 +73,10 @@
              <!-- lista delle categorie-->
 
                     <!-- direttiva per visionare la lista delle categorie-->
-                   <category-list view = "ctrl.view" selected-category="ctrl.selectedCategory" input-search="ctrl.inputSearch" > </category-list>                    
-              
+                    <category-list ng-show="ctrl.noteTask=='Note'" view = "ctrl.view" selected-category="ctrl.selectedCategory" input-search="ctrl.inputSearch" > </category-list>                    
+                    <custom-note ng-show="ctrl.noteTask=='Task'" > </custom-note>                    
+                   
+
                
         </div>
        

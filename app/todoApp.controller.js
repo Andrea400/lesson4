@@ -16,6 +16,9 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
         vm.view = 'list';
         vm.setView = setView;        
         vm.inputSearch='';
+         vm.noteTask = "Note";
+        vm.toggleNoteTask = toggleNoteTask;
+       
        
         // rende visivile/invisibile la barra-Search quando si preme l'apposita icona
         function toggleSearch(){
@@ -47,6 +50,13 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
                 vm.view= 'list';
         }
         
+          function toggleNoteTask(){
+           if(vm.noteTask== "Note")
+                    vm.noteTask = "Task";
+            else    
+                vm.noteTask="Note";
+       }
+
        
     }
 

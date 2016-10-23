@@ -1,8 +1,5 @@
-<div class='md-padding scroll' layout="row" layout-wrap >                                                                                                            
-  <!--
-     <div   flex="30" flex-sm="50" flex-gt-xs="30" class="prova"  ng-repeat="item in customListCtrl.items | filter:  customListCtrl.filterFunction  | filter: { category: customListCtrl.categoria}  |filter: {title: customListCtrl.imputSearch} ">
--->
-     <div flex="30" flex-sm="50" flex-gt-xs="30" class="scroll"  ng-repeat="item in customListCtrl.items |  myFilter: customListCtrl.imputSearch : customListCtrl.categoria : customListCtrl.filterFunction ">
+<div class='md-padding scroll tab-content' layout="row" layout-wrap >                                                                                                            
+     <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customListCtrl.items |  myFilter: customListCtrl.imputSearch : customListCtrl.categoria : customListCtrl.filterFunction ">
             <md-card>
                   <md-button ng-click="customListCtrl.toggleSelection(item)" ng-class="customListCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
                     <md-card-title>
