@@ -24,7 +24,7 @@ function MyFilter() {
         else if(done=="notDone")
         {
             angular.forEach(temp, function(item) {
-                if (item.done=="false") {
+                if (item.done==false) {
                 result.push(item);
                 }
             });
@@ -32,7 +32,7 @@ function MyFilter() {
         else if(done=="done")
         {
             angular.forEach(temp, function(item) {
-                if (item.done=="true") {
+                if (item.done==true) {
                 result.push(item);
                 }
             });

@@ -1,6 +1,6 @@
 <md-dialog aria-label="add-task">
         <div class="md-toolbar-tools">
-            <h2>Create Task</h2>
+            <h2>Task</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="dialogctrl.cancel()" aria-label="Delete">
                 <md-icon> cancel </md-icon>
@@ -32,9 +32,9 @@
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Category</label>
                     <md-select ng-model="dialogctrl.item.category">
-                    <md-option ng-repeat="(i,cat) in dialogctrl.categories" value="{{cat}}"
+                    <md-option ng-repeat="(i,cat) in dialogctrl.categories" value="{{cat.category}}"
                         ng-selected="i == 0 ? true:false">
-                        {{cat}}
+                        {{cat.category}}
                     </md-option>
                     </md-select>
                 </md-input-container>
@@ -43,7 +43,7 @@
                 <md-input-container class="md-block" flex-gt-sm>
                 <label>Status</label>
                 <md-select ng-model="dialogctrl.item.done">
-                <md-option ng-repeat="(i, stat) in dialogctrl.status" value="{{stat.value}}"
+                <md-option ng-repeat="(i, stat) in dialogctrl.status" ng-value={{stat.value}}
                     ng-selected="i == 0 ? true:false">
                     {{stat.key}}
                 </md-option>

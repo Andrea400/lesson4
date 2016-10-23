@@ -15,10 +15,12 @@
         vm.initDB = initDB;
         
         vm.storeTask = storeTask;
+        vm.updateTask = updateTask;
         vm.deleteTask = deleteTask;
         vm.getTasks = getTasks;
 
         vm.storeCategory = storeCategory;
+        vm.updateCategory = updateCategory;
         vm.deleteCategory = deleteCategory;
         vm.getCategories = getCategories;
 
@@ -35,13 +37,16 @@
         function initDB()
         {
             console.log("Initializing DB");
-            alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject');
-            alasql('ATTACH localStorage DATABASE dbproject');
-            alasql('USE dbproject');
+            alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject12');
+            alasql('ATTACH localStorage DATABASE dbproject12');
+            alasql('USE dbproject12');
 
-            alasql('CREATE TABLE IF NOT EXISTS ' + tasks + ' (title STRING, description STRING, category STRING, done BOOLEAN, priority INT, tags json, estimated INT, date date)');
-            alasql('CREATE TABLE IF NOT EXISTS ' + categories + ' (name STRING)');
-            alasql('CREATE TABLE IF NOT EXISTS ' + notes + ' (title STRING, description STRING)');
+            alasql('CREATE TABLE IF NOT EXISTS ' + tasks + ' (id INTEGER PRIMARY KEY, title STRING, description STRING, category STRING, done BOOLEAN, priority INT, tags json, estimated INT, date DATE)');
+            alasql('CREATE TABLE IF NOT EXISTS ' + categories + ' (id INTEGER PRIMARY KEY, category STRING)');
+            var cat = alasql('SELECT * FROM '+categories);
+            if (cat == null || cat.length == 0)
+                alasql('INSERT INTO ' +categories+ ' VALUES (0, "Default")');
+            alasql('CREATE TABLE IF NOT EXISTS ' + notes + ' (id INTEGER PRIMARY KEY, title STRING, description STRING)');
         }
 
 
@@ -59,9 +64,16 @@
             console.log("tasks after store: "+angular.toJson(alasql('SELECT * FROM '+tasks)));
         }
 
+        function updateTask(item)
+        {
+            alasql('UPDATE ' +tasks+ ' SET title=? , description=? , category=? , done=? , priority=? , tags=? , estimated=? , date=? WHERE id=?',[item.title, item.description, item.category,
+            item.done, item.priority, item.tags, item.estimated, item.date, item.id]);
+            console.log("tasks after update: "+angular.toJson(alasql('SELECT * FROM '+tasks)));
+        }
+
         function deleteTask(item)
         {
-            alasql('DELETE FROM ' + tasks + ' WHERE title=?',[item.title]);
+            alasql('DELETE FROM ' + tasks + ' WHERE id=?',[item.id]);
             console.log("tasks after drop: "+angular.toJson(alasql('SELECT * FROM ' + tasks)));
         }
         
@@ -75,13 +87,20 @@
 
         function storeCategory(item)
         {
-            alasql('INSERT INTO ' +categories+ ' VALUES ?',[item]);
+            alasql('INSERT INTO ' +categories+ ' VALUES (?,?)',[item.id,item.category]);
             console.log("Categories after store: "+angular.toJson(alasql('SELECT * FROM '+categories)));
         }
 
+        function updateCategory(item)
+        {
+            alasql('UPDATE ' +categories+ ' SET category=? WHERE id=?',[item.category, item.id]);
+            console.log("tasks after update: "+angular.toJson(alasql('SELECT * FROM '+categories)));
+        }
+
+
         function deleteCategory(item)
         {
-            alasql('DELETE FROM ' + categories + ' WHERE name=?', [item.name]);
+            alasql('DELETE FROM ' + categories + ' WHERE id=?', [item.id]);
             console.log("Categories after drop: "+angular.toJson(alasql('SELECT * FROM ' + categories)));
         }
 
@@ -102,7 +121,7 @@
 
         function deleteNote(item)
         {
-            alasql('DELETE FROM ' + notes + ' WHERE title=?', [item.title]);
+            alasql('DELETE FROM ' + notes + ' WHERE id=?', [item.id]);
             console.log("Notes after drop: "+angular.toJson(alasql('SELECT * FROM ' + notes)));
         }
 

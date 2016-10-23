@@ -46,7 +46,7 @@
         vm.toggleSelection = toggleSelection;
         vm.editItem = editItem;
 
-         vm.selectedItems = [];
+        vm.selectedItems = [];
         
         vm.item;
         vm.deleteItem = deleteItem;
@@ -61,14 +61,14 @@
             else
                 item.priority = -1;
 
-            storageService.set(vm.items);
+            storageService.updateTask(item);
         }
 
         //Occurs when the status of an items changes
-        function checkStateChanged() {
+        function checkStateChanged(item) {
             console.log("custionListCtrl: richiamata checkStateChanged ");
             console.log("custionListCtrl: salvataggio: " + vm.items);
-            storageService.set(vm.items);
+            storageService.updateTask(item);
         }
 
         //Select or deselect the given item
@@ -81,29 +81,35 @@
             // l'elemento non è ancora selezionato quindi lo seleziono
                 vm.selectedItems.push(item);
            }
-  console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
+            console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
         }
                
        
-        //Delete the current selected item, if any
-        function deleteItem(item,ev) {
-            console.log("entrato in deleteItem" + item.title);
-            if (item != null) {
+        //Delete the current selected items, if any
+        function deleteItem(ev) {
+            if (vm.selectedItems != null && vm.selectedItems.length > 0) {
                 var confirm = $mdDialog.confirm()
 
-                .textContent('The task "' + item.title + '" will be deleted. Are you sure?')
-                    .ariaLabel('Delete task')
+                .textContent('The selected tasks will be deleted. Are you sure?')
+                    .ariaLabel('Delete tasks')
                     .targetEvent(ev)
                     .ok('Yes')
                     .cancel('No');
 
                 $mdDialog.show(confirm).then(function(result) {
                     if (result) {
-                        var index = vm.items.indexOf(item);
-                        if (index != -1) {
-                            vm.items.splice(index, 1);
-                            storageService.set(vm.items);
+                        for (var i=0; i< vm.selectedItems.length; i++)
+                        {
+                            for (var x=0; x< vm.items.length; x++)
+                            {
+                                if(vm.items[x].id == vm.selectedItems[i].id)
+                                {                                 
+                                    vm.items.splice(x, 1);
+                                    storageService.deleteTask(vm.selectedItems[i]);
+                                }
+                            }
                         }
+                    vm.selectedItems = [];
                     }
                 });
             }
@@ -115,26 +121,47 @@
                 if (i != null )
                 {
                     vm.item = i;
+                    if (vm.items.length > 0)
+                    {
+                        var val = vm.items[vm.items.length - 1];
+                        vm.item.id= val.id +1;
+                    }
+                    else
+                        vm.item.id = 1;
+
+                    if(vm.item.date == null)
+                        vm.item.date = new Date();
                     vm.items.push(vm.item);
-                    storageService.set(vm.items);
+                    storageService.storeTask(vm.item);
                 }
             });
             
         }
 
 
-        function editItem(item, ev){
-            
-            if (item != null) {
-                taskService.showDialog(ev, vm.listaCategorie, item).then(function(i){
+        function editItem(ev){
+            var tmp;
+
+            if (vm.selectedItems != null) {
+                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp)).then(function(i){
                 if (i != null )
                 {
-                    var index = vm.items.indexOf(item);
+                    var index = vm.items.indexOf(vm.selectedItems[0]);
                         if (index != -1) {
-                            vm.items.splice(index, 1);
-                            vm.items.push(i);
-
-                            //storageService.set(vm.items);
+                            vm.items[index].title = i.title;
+                            vm.items[index].description = i.description;
+                            vm.items[index].priority = i.priority;
+                            vm.items[index].tags = i.tags;
+                            vm.items[index].category = i.category;
+                            vm.items[index].done = i.done;
+                            vm.items[index].estimated = i.estimated;
+                            if (i.date != null)
+                                vm.items[index].date = i.date;
+                            else
+                                vm.items[index].date = vm.selectedItems[0].date;
+                                
+                            storageService.updateTask(vm.items[index]);
+                            vm.selectedItems = [];
                         }
                 }
             });
@@ -143,11 +170,6 @@
 
         
     }
-
-
-
-
-
 
 
 })();

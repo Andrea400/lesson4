@@ -32,14 +32,14 @@
     //Directive controller
     function categoryListController(storageService, $mdDialog) {
         var vm = this;
-        vm.items =  [];
+        vm.items =  storageService.getTasks() || [];
+        for(var i=0; i<vm.items.length; i++)
+            vm.items[i].date = new Date(vm.items[i].date);
+        
         vm.selectedCategory=null;
-        vm.listaCategorie=[
-                         "Sport", 
-                         "Teatro",
-                         "Studio",
-        ]
+        vm.listaCategorie= storageService.getCategories();
         vm.selectedCategory = vm.listaCategorie[0];
+        
         vm.selectCategory = selectCategory;
         vm.addCategory = addCategory;
         vm.removeCategory= removeCategory;
@@ -68,32 +68,30 @@
             $mdDialog.show(confirm).then(function(categoria) {
                 if (categoria){
 
+                            var temp={category: categoria};
+                             if (vm.listaCategorie.length > 0)
+                             {
+                                var val = vm.listaCategorie[vm.listaCategorie.length - 1];
+                                temp.id= val.id +1;
+                             }
+                    
+                            else
+                                temp.id = 1;
                             
-                            var temp=categoria;
-                            console.log("voglio inserire:  " + categoria);
-                            var nonInserito= true;
                             var i=1;
-                            while(nonInserito)
+                            
+                            for(var x=0; x< vm.listaCategorie.length; x++)
                             {
-                                var index = vm.listaCategorie.indexOf(categoria);
-                                console.log("la categoria:  " + categoria + "e' presente? " + index);
-                                if(index==-1) // la categoria non e' gia' presente nella lista
+                                if(vm.listaCategorie[x].category == temp.category)
                                 {
-                                    console.log("inserisco la Categoria:  " + categoria);
-                                    vm.listaCategorie.push(categoria);
-                                    nonInserito= false;
-                                }
-                                else{
-                                        console.log("la categoria :  " + categoria + " esiste gia'");
-                                        console.log("lista:  " + vm.listaCategorie);
-                                        categoria = temp + i;
-                                        console.log("incremento:  " + categoria);
-                                        i++;
-                                        
-                                    }    
+                                    temp.category = temp.category +i;
+                                    i++;
+                                    break;
+                                 }
                             }
-                            console.log("finito:  " + categoria);
-
+                            
+                            vm.listaCategorie.push(temp);
+                            storageService.storeCategory(temp);
                 }
                 
             });
@@ -106,40 +104,41 @@
             console.log("categoria esistente? : " + index);
             if(index!= -1)
             {   
-                         var confirm = $mdDialog.prompt()
-                .title('Rename Category ' + vm.selectedCategory)
+                var confirm = $mdDialog.prompt()
+                .title('Rename Category ' + vm.selectedCategory.category)
                 .placeholder('Your category title...')
                 .ariaLabel('Your category title...')
                 .targetEvent(ev)
-                .ok('Add')
+                .ok('Save')
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function(categoria) {
                 if (categoria){
 
                     var confirm = $mdDialog.confirm()
-                    .textContent('The category "' + vm.selectedCategory + '" will be renamed to "' + categoria+ '". Are you sure?')
-                    .ariaLabel('Delete task')
+                    .textContent('The category "' + vm.selectedCategory.category + '" will be renamed to "' + categoria+ '". Are you sure?')
+                    .ariaLabel('Rename category')
                     .targetEvent(ev)
                     .ok('Yes')
                     .cancel('No');
 
                 $mdDialog.show(confirm).then(function(result) {
                     if (result) {
-                        
-                     
                         console.log("Nuovo nome:  " + categoria);
                         console.log("Vecchio nome: " + vm.selectedCategory);
-                        vm.listaCategorie[index]= categoria;
+                        vm.listaCategorie[index].category=categoria;
+                        storageService.updateCategory(vm.listaCategorie[index]);
                       
                         // cambiare attr category a tutti i task della categoria modificata
                         for(var i in vm.items)
                         {
-                            if(vm.items[i].category.toLowerCase() == vm.selectedCategory.toLowerCase())
-                               vm.items[i].category =  categoria;
+                            if(vm.items[i].category.toLowerCase() == vm.selectedCategory.category.toLowerCase())
+                            {
+                                vm.items[i].category =  categoria;
+                                storageService.updateTask(vm.items[i]);
+                            }
                         }
-                          vm.selectedCategory = categoria;
-                         console.log("finito:  " + vm.listaCategorie);
+                         console.log("finito:  " + angular.toJson(vm.listaCategorie));
                       
                     }
                 });
@@ -163,8 +162,8 @@
 
                  var confirm = $mdDialog.confirm()
 
-                .textContent('The task "' + vm.selectedCategory + '" will be deleted. Are you sure?')
-                    .ariaLabel('Delete task')
+                .textContent('The category "' + vm.selectedCategory.category + '" will be deleted. Are you sure?')
+                    .ariaLabel('Delete category')
                     .targetEvent(ev)
                     .ok('Yes')
                     .cancel('No');
@@ -174,6 +173,7 @@
                         
                         vm.listaCategorie.splice(index,1);
                         clearCategory(vm.selectedCategory);
+                        storageService.deleteCategory(vm.selectedCategory);
                         vm.selectedCategory=vm.listaCategorie[index-1];
                       
                     }
@@ -187,22 +187,21 @@
        // fuzione che elimina tutti i task appartenenti ad una certa categoria
         function clearCategory(categoria)
         {
-            console.log("elimino ogni singolo task appartenente alla categoria " + categoria);
+            console.log("elimino ogni singolo task appartenente alla categoria " + categoria.category);
             console.log("lunghezza vettore items: " + vm.items.length);
             for( var i in vm.items)
             {
                 var item = vm.items[i];
-                if(item.title.toLowerCase() == categoria.toLowerCase())
+                if(item.category.toLowerCase() == categoria.category.toLowerCase())
                 {
-                    console.log("elimino task : " + item.title +  " perche appartiene alla categoria : " + categoria);
+                    console.log("elimino task : " + item.title +  " perche appartiene alla categoria : " + categoria.category);
                       var index = vm.items.indexOf(item);
                       vm.items.splice(index,1);
+                      storageService.deleteTask(item);
                 }
             }
             console.log("lunghezza vettore items: " + vm.items.length);
             console.log("lunghezza vettore items: " + angular.toJson(vm.items));
-            storageService.set(vm.items);
-
 
         }
 

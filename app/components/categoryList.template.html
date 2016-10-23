@@ -27,19 +27,19 @@
     <!-- fine menu' a tendina-->
    
 <md-tabs md-dynamic-height md-border-bottom class="no-scroll" >
-    <md-tab class="floatSx" ng-repeat="categoria in categoryListCtrl.listaCategorie" label="{{categoria}} " ng-click="categoryListCtrl.selectCategory(categoria)" >
+    <md-tab class="floatSx" ng-repeat="categoria in categoryListCtrl.listaCategorie" label="{{categoria.category}} " ng-click="categoryListCtrl.selectCategory(categoria)" >
         <md-tabs md-dynamic-height md-border-bottom class="no-scroll coloreScuro " style="padding-left: 2em;" >
          <md-tab    label="Todo">
-                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.notDone" imput-search="categoryListCtrl.inputSearch"></div>
-                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.notDone" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria.category"  filter-function="categoryListCtrl.notDone" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria.category"  filter-function="categoryListCtrl.notDone" imput-search="categoryListCtrl.inputSearch"></div>
             </md-tab>
             <md-tab  label="Done">
-                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.done" imput-search="categoryListCtrl.inputSearch"></div>
-                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.done" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria.category"  filter-function="categoryListCtrl.done" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria.category"  filter-function="categoryListCtrl.done" imput-search="categoryListCtrl.inputSearch"></div>
             </md-tab>
             <md-tab  label="All">
-                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria"  filter-function="categoryListCtrl.all" imput-search="categoryListCtrl.inputSearch"></div>
-                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria"  filter-function="categoryListCtrl.all" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customList" lista-categorie=" categoryListCtrl.listaCategorie" items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'apps'"  categoria= "categoria.category"  filter-function="categoryListCtrl.all" imput-search="categoryListCtrl.inputSearch"></div>
+                <div custom-list  type = "customGrid"  lista-categorie=" categoryListCtrl.listaCategorie"  items="categoryListCtrl.items" ng-show="categoryListCtrl.view == 'list'"  categoria= "categoria.category"  filter-function="categoryListCtrl.all" imput-search="categoryListCtrl.inputSearch"></div>
             </md-tab>           
         </md-tabs>       
     </md-tab>    
