@@ -84,10 +84,9 @@
                             {
                                 if(vm.listaCategorie[x].category == temp.category)
                                 {
-                                    temp.category = temp.category +i;
+                                    temp.category = categoria +i;
                                     i++;
-                                    break;
-                                 }
+                                }
                             }
                             
                             vm.listaCategorie.push(temp);
@@ -125,20 +124,41 @@
                 $mdDialog.show(confirm).then(function(result) {
                     if (result) {
                         console.log("Nuovo nome:  " + categoria);
-                        console.log("Vecchio nome: " + vm.selectedCategory);
-                        vm.listaCategorie[index].category=categoria;
+                        console.log("Vecchio nome: " + vm.selectedCategory.category);
+                        var tmp = vm.selectedCategory.category;
+                        var temp={category: categoria};
+                        
+                        var i=1;
+                            
+                        for(var x=0; x< vm.listaCategorie.length; x++)
+                        {
+                           if(vm.listaCategorie[x].category == temp.category)
+                           {
+                               temp.category = categoria +i;
+                               i++;
+                            }
+                        }
+                            
+                        vm.listaCategorie[index].category=temp.category;
                         storageService.updateCategory(vm.listaCategorie[index]);
                       
                         // cambiare attr category a tutti i task della categoria modificata
                         for(var i in vm.items)
                         {
-                            if(vm.items[i].category.toLowerCase() == vm.selectedCategory.category.toLowerCase())
+                            console.log("Vcchia category:  " +tmp );
+
+                            if(vm.items[i].category.toLowerCase() == tmp.toLowerCase())
                             {
-                                vm.items[i].category =  categoria;
+                                console.log("Task category:  " + vm.items[i].category.toLowerCase());
+                                console.log("Nuova category:  " + vm.selectedCategory.category.toLowerCase());
+                                vm.items[i].category =  temp.category;
+                                console.log("nuovo task category:  " + vm.items[i].category);
+               
                                 storageService.updateTask(vm.items[i]);
                             }
                         }
                          console.log("finito:  " + angular.toJson(vm.listaCategorie));
+                         console.log("LISTA_TASK:  " + angular.toJson(vm.items));
                       
                     }
                 });
@@ -189,15 +209,19 @@
         {
             console.log("elimino ogni singolo task appartenente alla categoria " + categoria.category);
             console.log("lunghezza vettore items: " + vm.items.length);
-            for( var i in vm.items)
+         
+            
+            for( var i=0; i<vm.items.length; i++)
             {
                 var item = vm.items[i];
+                
                 if(item.category.toLowerCase() == categoria.category.toLowerCase())
                 {
                     console.log("elimino task : " + item.title +  " perche appartiene alla categoria : " + categoria.category);
                       var index = vm.items.indexOf(item);
                       vm.items.splice(index,1);
                       storageService.deleteTask(item);
+                      i--;
                 }
             }
             console.log("lunghezza vettore items: " + vm.items.length);

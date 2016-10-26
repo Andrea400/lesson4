@@ -103,7 +103,7 @@
                             for (var x=0; x< vm.items.length; x++)
                             {
                                 if(vm.items[x].id == vm.selectedItems[i].id)
-                                {                                 
+                                {               
                                     vm.items.splice(x, 1);
                                     storageService.deleteTask(vm.selectedItems[i]);
                                 }
@@ -143,7 +143,8 @@
             var tmp;
 
             if (vm.selectedItems != null) {
-                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp)).then(function(i){
+                if(vm.selectedItems.length == 1){
+                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp),false).then(function(i){
                 if (i != null )
                 {
                     var index = vm.items.indexOf(vm.selectedItems[0]);
@@ -165,6 +166,34 @@
                         }
                 }
             });
+            }
+
+            //Multimple task edit (only priority and status)
+            else
+            {
+                taskService.showDialog(ev,null,null, true).then(function(i)
+                {
+                    if (i != null)
+                    {
+                        for (var t in vm.selectedItems)
+                        {
+                            for (var x in vm.items)
+                            {
+                                if(vm.items[x].id == vm.selectedItems[t].id)
+                                {
+                                    if (i.priority != null)
+                                        vm.items[x].priority = i.priority;
+                                    
+                                    if (i.done != null)
+                                        vm.items[x].done = i.done;
+                                        
+                                    storageService.updateTask(vm.items[x]);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
             }
         }
 

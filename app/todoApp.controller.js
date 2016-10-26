@@ -13,7 +13,7 @@ TodoController.$inject = ['storageService','$mdDialog','taskService'];
         vm.search = false; //booleano per "barra Search"
         vm.toggleSearch = toggleSearch; // funzione per Show/hide barra search
         // variabile per view in formato lista o grid
-        vm.view = 'list';
+        vm.view = 'apps';
         vm.setView = setView;        
         vm.inputSearch='';
          vm.noteTask = "Note";

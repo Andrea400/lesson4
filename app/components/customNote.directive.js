@@ -72,10 +72,10 @@
                         {
                             for (var x=0; x< vm.items.length; x++)
                             {
-                                if(vm.items[x].id == vm.selectedItems[i].id)
+                                if(vm.items[x] == vm.selectedItems[i])
                                 {                                 
                                     vm.items.splice(x, 1);
-                                    storageService.deleteTask(vm.selectedItems[i]);
+                                    //storageService.deleteTask(vm.selectedItems[i]);
                                 }
                             }
                         }
