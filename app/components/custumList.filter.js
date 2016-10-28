@@ -6,10 +6,10 @@
         .filter('myFilter', MyFilter)
 
 function MyFilter() {
-  return function(data, lunghezza,cercaPer, category,done) {
+  return function(data, inputSerch,cercaPer, category,done) {
     var result = [];
     var temp=[]
-    if (angular.isArray(data) && (lunghezza.length==0))
+    if (angular.isArray(data) && (inputSerch.length==0))
     {
           if(category != null && done!= null){ // filtro per i task
 
@@ -45,7 +45,7 @@ function MyFilter() {
       //console.log("vettore risultante filtro done: " + done + " e categoria: "+ category + " vet: " +angular.toJson(result));
        return result;
 
-    }else if(angular.isArray(data) && lunghezza.length!=0)    
+    }else if(angular.isArray(data) && inputSerch.length!=0)    
     {
         //non considero il filtraggio per done e per categoria e filtro in base al search
         console.log("cerca per: " +cercaPer);
@@ -53,20 +53,20 @@ function MyFilter() {
 
               if(cercaPer == "title"){ console.log("cerca per uguale a title " + cercaPer); 
                 angular.forEach(data, function(item) { 
-                    if (item.title.indexOf(lunghezza)!=-1) {
+                    if (item.title.indexOf(inputSerch)!=-1) {
                       result.push(item);
                     }
                   });
               } else  if(cercaPer== "description"){
                 angular.forEach(data, function(item) { 
-                    if (item.description.indexOf(lunghezza)!=-1) {
+                    if (item.description.indexOf(inputSerch)!=-1) {
                       result.push(item);
                     }
                   });
               }else  if(cercaPer== "tag"){
                 angular.forEach(data, function(item) { 
                   for (var i in item.tags){
-                    if (item.tags[i].indexOf(lunghezza)!=-1) {
+                    if (item.tags[i].indexOf(inputSerch)!=-1) {
                       result.push(item);
                       break;
                     }
@@ -75,7 +75,7 @@ function MyFilter() {
               }
         }  else {
                      angular.forEach(data, function(item) { 
-                    if (item.title.indexOf(lunghezza)!=-1) {
+                    if (item.title.indexOf(inputSerch)!=-1) {
                       result.push(item);
                     }
                   });

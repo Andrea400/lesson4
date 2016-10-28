@@ -31,7 +31,7 @@
           <md-tab label="Note">
                 <md-content class="md-padding scroll tab-content"  >
                     <md-list >
-                       <md-list-item class="md-3-line" style="background:{{item.color}};" ng-repeat="item in customNoteCtrl.items |  myFilter: customNoteCtrl.inputSearch : customNoteCtrl.cercaPer : null : null "  ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1? 'selected':''" ng-click="customNoteCtrl.toggleSelection(item)">
+                       <md-list-item class="md-3-line" style="background:{{item.color}};" ng-repeat="item in customNoteCtrl.items |  myFilter: customNoteCtrl.inputSearch : customNoteCtrl.cercaPer.abbrev : null : null "  ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1? 'selected':''" ng-click="customNoteCtrl.toggleSelection(item)">
                            <div class="md-list-item-text">
                                 
                                 <h3>{{item.title}}</h3>

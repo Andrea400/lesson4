@@ -60,8 +60,8 @@
                     <md-input-container class="md-block" ng-show="ctrl.search" flex-sm>
                         <label>Cerca per</label>
                         <md-select ng-model="ctrl.cercaPer">
-                        <md-option  ng-value="cerca" ng-repeat="(i,cerca) in ctrl.vettoreCercaPer" ng-selected="i == 0 ? true:false">
-                            {{cerca}}
+                        <md-option  ng-repeat="cerca in ctrl.vettoreCercaPer" ng-value="cerca"  >
+                            {{cerca.abbrev}}
                         </md-option>
                         </md-select>
                     </md-input-container>

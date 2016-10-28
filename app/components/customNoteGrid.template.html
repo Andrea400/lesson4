@@ -30,7 +30,7 @@
         <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
           <md-tab label="Note">
                 <md-content class="md-padding scroll tab-content" layout="row" layout-wrap >
-                        <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customNoteCtrl.items |  myFilter: customNoteCtrl.inputSearch : customNoteCtrl.cercaPer : null : null ">
+                        <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customNoteCtrl.items |  myFilter: customNoteCtrl.inputSearch : customNoteCtrl.cercaPer.abbrev : null : null ">
                               <md-card style="background:{{item.color}};" ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
                                 <md-button ng-click="customNoteCtrl.toggleSelection(item)" >
                                   <md-card-title>

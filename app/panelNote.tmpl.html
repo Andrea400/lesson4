@@ -21,16 +21,9 @@
                         </md-input-container>
 
                                 
-                             
-                             <md-input-container class="md-block" >
-                                    <label>Color</label>
-                                    <md-select ng-model="dialogctrl.item.color">
-                                    <md-option ng-repeat="(i,color) in dialogctrl.color"  ng-value="color.value"  ng-selected="i == 0 ? true:false">
-                                        {{color.key}}
-                                    </md-option>
-                                    </md-select>
-                                </md-input-container>
+                     <md-datepicker md-min-date="dialogctrl.mindate" ng-model="dialogctrl.item.data" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
 
+                 <pre>   </pre>
                             
                 </div>
                   <div layout layout-sm="column" style="background: #eeeeee" >             
@@ -40,10 +33,19 @@
                                     <div style="font-size:70%"> Type comma separated tags.</div>
                                 </md-input-container>
 
-                                
-                                <md-datepicker md-min-date="dialogctrl.mindate" ng-model="dialogctrl.item.data" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+                                 <pre>   </pre>
+  
+                             <md-input-container class="md-block" >
+                                    <label>Color</label>
+                                    <md-select ng-model="dialogctrl.item.color" >
+                                    <md-option ng-repeat="color in dialogctrl.color"  ng-value="color.value" >
+                                        {{color.key}}
+                                    </md-option>
+                                    </md-select>
+                                </md-input-container>
+
                      
-                <pre>   </pre>
+               
                
                </div>
                 
