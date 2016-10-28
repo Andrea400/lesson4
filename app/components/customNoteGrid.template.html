@@ -30,18 +30,18 @@
         <md-tabs md-dynamic-height md-border-bottom class="no-scroll">
           <md-tab label="Note">
                 <md-content class="md-padding scroll tab-content" layout="row" layout-wrap >
-                        <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customNoteCtrl.items">
-                              <md-card>
-                                <md-button ng-click="customNoteCtrl.toggleSelection(item)" ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+                        <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customNoteCtrl.items |  myFilter: customNoteCtrl.inputSearch : customNoteCtrl.cercaPer : null : null ">
+                              <md-card style="background:{{item.color}};" ng-class="customNoteCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+                                <md-button ng-click="customNoteCtrl.toggleSelection(item)" >
                                   <md-card-title>
                                     <md-card-title-text>
-                                      <span class="md-headline coloreScuro">{{item}}</span>
-                                      <span class="md-subhead coloreScuro">Data creazione task: {{item}}</span>
+                                      <span class="md-headline coloreScuro">{{item.title}}</span>
+                                      <span class="md-subhead coloreScuro">Data: {{item.data | date: "dd-MM-yyyy"}}</span>
                                     </md-card-title-text>
                                   </md-card-title>
                                   <md-divider></md-divider>
                                   <md-card-content>
-                                      <p>description: {{item}} </p>
+                                      <p>description: {{item.description}} </p>
                                       </md-button>
                                       <md-divider></md-divider>
                                       

@@ -1,0 +1,63 @@
+<md-dialog aria-label="add-task">
+        <div class="md-toolbar-tools">
+            <h2>Note</h2>   
+          <div > </div> 
+            <span style=" text-align: right" flex> {{dialogctrl.mydate | date: "dd-MM-yyyy"}}</span>
+            <md-button class="md-icon-button" ng-click="dialogctrl.cancel()" aria-label="Delete">
+                <md-icon> cancel </md-icon>
+            </md-button>
+        </div>
+
+    <md-content class="md-padding" ng-hide="dialogctrl.multiple">
+        <form name="taskForm" novalidate>
+                <div layout layout-sm="column" style="background: #eeeeee" >
+                        
+                        <md-input-container class="md-block">
+                            <label>Title</label>
+                            <input ng-if="!dialogctrl.multiple" required name="titleTask" ng-model="dialogctrl.item.title">
+                            <div ng-show="taskForm.$submitted || taskForm.titleTask.$touched">
+                            <div style="font-size:70%; color:red" ng-show="taskForm.titleTask.$error.required">Type the task name.</div>
+                            </div>
+                        </md-input-container>
+
+                                
+                             
+                             <md-input-container class="md-block" >
+                                    <label>Color</label>
+                                    <md-select ng-model="dialogctrl.item.color">
+                                    <md-option ng-repeat="(i,color) in dialogctrl.color"  ng-value="color.value"  ng-selected="i == 0 ? true:false">
+                                        {{color.key}}
+                                    </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                            
+                </div>
+                  <div layout layout-sm="column" style="background: #eeeeee" >             
+                                <md-input-container>
+                                    <label>Tags</label>
+                                    <input ng-model="dialogctrl.item.tags" ng-list=",">
+                                    <div style="font-size:70%"> Type comma separated tags.</div>
+                                </md-input-container>
+
+                                
+                                <md-datepicker md-min-date="dialogctrl.mindate" ng-model="dialogctrl.item.data" md-placeholder="Enter date" md-open-on-focus ></md-datepicker>
+                     
+                <pre>   </pre>
+               
+               </div>
+                
+                <div class="md-dialog-actions" layout="column" style="background: #fffffe">
+                         <md-input-container>
+                            <label>Description</label>
+                            <textarea name="description" id="" cols="30" rows="10" ng-model="dialogctrl.item.description"></textarea>
+                        </md-input-container>
+                </div>
+        </form>
+    </md-content>
+                        
+    <div class="md-dialog-actions" layout="row"> <span flex></span>
+        <md-button ng-click="dialogctrl.cancel()"> Cancel </md-button>
+        <md-button ng-disabled="taskForm.$invalid" ng-click="dialogctrl.answer(dialogctrl.item)" class="md-primary"> Save </md-button>
+    </div>
+</md-dialog>

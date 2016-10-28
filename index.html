@@ -31,7 +31,8 @@
     <script src="app/components/categoryList.directive.js"></script>
     <script src="app/components/customNote.directive.js"></script>
     <script src="app/todoItem.service.js"></script>
-     <script src="app/components/custumList.filter.js"></script>
+    <script src="app/notePanel.service.js"></script>
+    <script src="app/components/custumList.filter.js"></script>
 
 </head>
 
@@ -54,6 +55,17 @@
                         <md-icon> search </md-icon>
                     </md-button>                     
                     
+
+
+                    <md-input-container class="md-block" ng-show="ctrl.search" flex-sm>
+                        <label>Cerca per</label>
+                        <md-select ng-model="ctrl.cercaPer">
+                        <md-option  ng-value="cerca" ng-repeat="(i,cerca) in ctrl.vettoreCercaPer" ng-selected="i == 0 ? true:false">
+                            {{cerca}}
+                        </md-option>
+                        </md-select>
+                    </md-input-container>
+
                     <div ng-show="ctrl.search" >
                         <input type="search" ng-model="ctrl.inputSearch">
                     </div>
@@ -61,21 +73,22 @@
                     <md-button ng-click="ctrl.setView()" class="md-icon-button" aria-label="Grid">
                         <md-icon > {{ctrl.view}} </md-icon>
                     </md-button>
-
-
-                    
-
-                    
-                </div>
+              </div>
             </md-toolbar>
 
       
              <!-- lista delle categorie-->
 
-                    <!-- direttiva per visionare la lista delle categorie-->
+                    <!-- direttiva per visionare la lista delle categorie
+                        dentro abbiamo view list e view grid per i task
                     <category-list ng-show="ctrl.noteTask=='Note'" view = "ctrl.view" selected-category="ctrl.selectedCategory" input-search="ctrl.inputSearch" > </category-list>                    
-                    <custom-note ng-show="ctrl.noteTask=='Task'" > </custom-note>                    
-                   
+                    -->
+                    <!-- vista note-->
+
+                    <!-- vista list-->
+                    <custom-note type="customNoteList" items="ctrl.listNote"  ng-show="ctrl.noteTask=='Task' && ctrl.view=='apps'" input-search="ctrl.inputSearch" cerca-per="ctrl.cercaPer"> </custom-note>          
+                   <!-- vista grid-->
+                    <custom-note type="customNoteGrid" items="ctrl.listNote"  ng-show="ctrl.noteTask=='Task' && ctrl.view=='list'" input-search="ctrl.inputSearch" cerca-per="ctrl.cercaPer" > </custom-note>          
 
                
         </div>

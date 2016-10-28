@@ -8,15 +8,19 @@
     
         
 
-    customNote.$inject = ['storageService','$mdDialog','taskService'];
+    customNote.$inject = ['storageService','$mdDialog','noteService'];
 
-    function customNote(storageService, $mdDialog, taskService) {
+    function customNote(storageService, $mdDialog, noteService) {
 
         return {
             scope: {
+                items: '=',
+                type:'=',
+                inputSearch:'=',
+                cercaPer:'=',
             },
             templateUrl: function (element, attribute) {
-                return 'app/components/customNote.template.html';
+                return 'app/components/' + attribute.type + '.template.html';
             },
 
             bindToController: true,
@@ -29,17 +33,17 @@
     }
 
 
-    customNoteController.$inject = ['storageService','taskService','$mdDialog'];
+    customNoteController.$inject = ['storageService','noteService','$mdDialog'];
 
     //Directive controller
-    function customNoteController( storageService, taskService,  $mdDialog, $scope) {
+    function customNoteController( storageService, noteService,  $mdDialog, $scope) {
         var vm = this;
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.editItem = editItem;
         vm.toggleSelection = toggleSelection;
         vm.selectedItems =[];
-        vm.items =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,156];
+      
 
 
 
@@ -76,9 +80,11 @@
                                 {                                 
                                     vm.items.splice(x, 1);
                                     //storageService.deleteTask(vm.selectedItems[i]);
+                                    
                                 }
                             }
                         }
+                    console.log("vettore dopo l'eliminazione:" + angular.toJson(vm.items));
                     vm.selectedItems = [];
                     }
                 });
@@ -87,10 +93,12 @@
 
 
         function createItem(ev){
-            taskService.showDialog(ev,vm.listaCategorie).then(function(i){
+            console.log("richiamato il createItem");
+            noteService.showDialog(ev).then(function(i){
                 if (i != null )
                 {
                     vm.item = i;
+                    //per il calcolo dell'id
                     if (vm.items.length > 0)
                     {
                         var val = vm.items[vm.items.length - 1];
@@ -99,11 +107,16 @@
                     else
                         vm.item.id = 1;
 
-                    if(vm.item.date == null)
-                        vm.item.date = new Date();
+                    if(vm.item.data == null)
+                        vm.item.data = new Date();
+                    if(vm.item.tags == null)
+                        vm.item.tags="";
                     vm.items.push(vm.item);
-                    storageService.storeTask(vm.item);
+                    //storageService.storeTask(vm.item);
+                    console.log("vettore dopo l'inserimento:" + angular.toJson(vm.items));
+                    
                 }
+               
             });
             
         }
@@ -113,22 +126,19 @@
             var tmp;
 
             if (vm.selectedItems != null) {
-                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp)).then(function(i){
+                noteService.showDialog(ev, angular.copy(vm.selectedItems[0], tmp)).then(function(i){
                 if (i != null )
                 {
                     var index = vm.items.indexOf(vm.selectedItems[0]);
                         if (index != -1) {
                             vm.items[index].title = i.title;
                             vm.items[index].description = i.description;
-                            vm.items[index].priority = i.priority;
                             vm.items[index].tags = i.tags;
-                            vm.items[index].category = i.category;
-                            vm.items[index].done = i.done;
-                            vm.items[index].estimated = i.estimated;
-                            if (i.date != null)
-                                vm.items[index].date = i.date;
+                             vm.items[index].color = i.color;
+                            if (i.data != null)
+                                vm.items[index].data = i.data;
                             else
-                                vm.items[index].date = vm.selectedItems[0].date;
+                                vm.items[index].data = vm.selectedItems[0].data;
                                 
                             storageService.updateTask(vm.items[index]);
                             vm.selectedItems = [];

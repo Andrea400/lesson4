@@ -1,9 +1,9 @@
 /* Style for add button */
 
 .add-button {
-    position: absolute;
-    top: 70%;
-    right: 5%;
+    position: fixed;
+    top: 80%;
+    right: 1%;
 }
 
 .menu-button{
@@ -35,7 +35,9 @@ md-tab-content.md-no-scroll>div,
 }
 
 .selected {
-    background: #eaeaea;
+     
+       border: 5px solid #eeeeff;
+       border-style: inset;
 }
 .floatSx{
     float:left;
