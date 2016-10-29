@@ -32,7 +32,7 @@
                     <label>Category</label>
                     <md-select ng-disabled="!dialogctrl.edit || vm.item!= null" ng-if="!dialogctrl.multiple" required ng-model="dialogctrl.item2.category">
                     <md-option ng-repeat="(i,cat) in dialogctrl.categories" value="{{cat.category}}"
-                        ng-selected="cat.category == dialogctrl.item2.category || i==0? true:false">
+                        ng-selected="cat.category == dialogctrl.item2.category">
                         {{cat.category}}
                     </md-option>
                     </md-select>
@@ -43,7 +43,7 @@
                 <label>Status</label>
                 <md-select ng-disabled="!dialogctrl.edit || vm.item!= null" ng-if="!dialogctrl.multiple" required ng-model="dialogctrl.item2.done">
                 <md-option ng-repeat="(i, stat) in dialogctrl.status" ng-value={{stat.value}}
-                    ng-selected="stat.value == dialogctrl.item2.done || i==0? true:false">
+                    ng-selected="stat.value == dialogctrl.item2.done">
                     {{stat.key}}
                 </md-option>
                 </md-select>

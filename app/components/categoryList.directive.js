@@ -80,15 +80,12 @@
                             
                             var i=1;
                             
-                            console.log ("Cerca duplicati");
                             for(var x=0; x< vm.listaCategorie.length; x++)
                             {
                                 if(vm.listaCategorie[x].category.toLowerCase() == temp.category.toLowerCase())
                                 {
-                                    console.log("Trovato duplicato");
                                     temp.category = categoria +i;
                                     i++;
-                                    console.log(angular.toJson(temp));
                                 }
                             }
                             
