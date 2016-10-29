@@ -27,6 +27,7 @@
         vm.storeNote = storeNote;
         vm.deleteNote = deleteNote;
         vm.getNotes = getNotes;
+        vm.updateNote = updateNote;
 
         var tasks = "tasks";
         var notes = "notes";
@@ -37,16 +38,16 @@
         function initDB()
         {
             console.log("Initializing DB");
-            alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject12');
-            alasql('ATTACH localStorage DATABASE dbproject12');
-            alasql('USE dbproject12');
+            alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject18');
+            alasql('ATTACH localStorage DATABASE dbproject18');
+            alasql('USE dbproject18');
 
             alasql('CREATE TABLE IF NOT EXISTS ' + tasks + ' (id INTEGER PRIMARY KEY, title STRING, description STRING, category STRING, done BOOLEAN, priority INT, tags json, estimated INT, date DATE)');
             alasql('CREATE TABLE IF NOT EXISTS ' + categories + ' (id INTEGER PRIMARY KEY, category STRING)');
             var cat = alasql('SELECT * FROM '+categories);
             if (cat == null || cat.length == 0)
                 alasql('INSERT INTO ' +categories+ ' VALUES (0, "Default")');
-            alasql('CREATE TABLE IF NOT EXISTS ' + notes + ' (id INTEGER PRIMARY KEY, title STRING, description STRING)');
+            alasql('CREATE TABLE IF NOT EXISTS ' + notes + ' (id INTEGER PRIMARY KEY, title STRING, description STRING, color STRING, tags json, date DATE)');
         }
 
 
@@ -123,6 +124,13 @@
         {
             alasql('DELETE FROM ' + notes + ' WHERE id=?', [item.id]);
             console.log("Notes after drop: "+angular.toJson(alasql('SELECT * FROM ' + notes)));
+        }
+
+        function updateNote(item)
+        {
+            alasql('UPDATE ' +notes+ ' SET title=?, description=? , color=? , tags=? , date=? WHERE id=?',[item.title, item.description, item.color,
+            item.tags, item.date, item.id]);
+            console.log("notes after update: "+angular.toJson(alasql('SELECT * FROM '+notes)));
         }
 
         //Loads value from the session storage

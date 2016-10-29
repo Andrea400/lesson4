@@ -8,7 +8,7 @@
 
     function noteService($mdDialog){
                 console.log("aperto il noteService.showDialog");
-        this.showDialog = function (ev, item, multiple){
+        this.showDialog = function (ev, item, multiple, edit){
             return $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'dialogctrl',
@@ -16,16 +16,19 @@
                     item: 'vm.item',
                     mindate: 'vm.mindate',
                     multiple: 'vm.multiple',
+                    edit: 'vm.edit'
                  
                 },
                 locals: {
                     item: item,
                     multiple: multiple,
-                    color:  [{key: "white", value: "#ffffff"},
-                             {key: "red", value: "#ff0000"},
-                             {key: "green", value: "#00ff00"},
-                             {key: "blue", value: "#0000ff"},
-                             ]
+                    color:  [{key: "white", value: "#FFFFFF"},
+                             {key: "red", value: "#FF9F71"},
+                             {key: "green", value: "#82C168"},
+                             {key: "blue", value: "#7FC2BC"},
+                             {key: "yellow", value: "#FFFF80"}
+                             ],
+                    edit: edit
                 },
                 templateUrl: 'app/panelNote.tmpl.html',
                 clickOutsideToClose:true,
@@ -45,11 +48,13 @@
 
     
 
-    function DialogController ($mdDialog, item,color, multiple)
+    function DialogController ($mdDialog, item,color, multiple, edit)
     {
         var vm = this;
         vm.item = item;
         vm.multiple = multiple;
+        vm.edit = edit;
+        vm.operation = getOperation();
         vm.getMinDate = getMinDate;
         vm.hide = hide;
         vm.cancel = cancel;
@@ -57,17 +62,38 @@
         vm.mydate = new Date();
         
         vm.mindate = getMinDate();
-    
+        vm.getItemDate = getItemDate;
+        vm.item2 = angular.copy(item) || {};
+        vm.item2.date = getItemDate();
+
         function getMinDate()
         {
             if(vm.item == null)
                 return (new Date(
-                vm.mydate.getFullYear(),
-                vm.mydate.getMonth(),
-                vm.mydate.getDate()));
-
+                    vm.mydate.getFullYear(),
+                    vm.mydate.getMonth(),
+                    vm.mydate.getDate()));
             else
                 return new Date(vm.item.date);
+        }
+
+        function getItemDate()
+        {
+            if (vm.item == null)
+                return vm.mindate;
+            else
+                return new Date(vm.item.date);
+        }
+
+        function getOperation()
+        {
+            if (multiple && edit)
+                return "Multiple Note edit";
+            if (edit && multiple == false)
+                return "Single Note edit";
+            if (vm.item == null)
+                return "Note Creation";
+            return "Note Details";
         }
 
         function hide()

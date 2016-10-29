@@ -36,8 +36,8 @@ md-tab-content.md-no-scroll>div,
 
 .selected {
      
-       border: 5px solid #eeeeff;
-       border-style: inset;
+    border-left: 5px solid dodgerblue;
+    background-color: lightgrey;
 }
 .floatSx{
     float:left;

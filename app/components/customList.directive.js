@@ -52,6 +52,7 @@
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.editItem = editItem;
+        vm.showItem = showItem;
         vm.attuareFiltro = true;
 
         //Changes the priority of the given item
@@ -117,7 +118,7 @@
 
 
         function createItem(ev){
-            taskService.showDialog(ev,vm.listaCategorie).then(function(i){
+            taskService.showDialog(ev,vm.listaCategorie,null, false, true).then(function(i){
                 if (i != null )
                 {
                     vm.item = i;
@@ -144,7 +145,7 @@
 
             if (vm.selectedItems != null) {
                 if(vm.selectedItems.length == 1){
-                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp),false).then(function(i){
+                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp),false, true).then(function(i){
                 if (i != null )
                 {
                     var index = vm.items.indexOf(vm.selectedItems[0]);
@@ -171,7 +172,7 @@
             //Multimple task edit (only priority and status)
             else
             {
-                taskService.showDialog(ev,null,null, true).then(function(i)
+                taskService.showDialog(ev,null,null, true, true).then(function(i)
                 {
                     if (i != null)
                     {
@@ -181,7 +182,7 @@
                             {
                                 if(vm.items[x].id == vm.selectedItems[t].id)
                                 {
-                                    if (i.priority != null)
+                                   if (i.priority)
                                         vm.items[x].priority = i.priority;
                                     
                                     if (i.done != null)
@@ -195,6 +196,16 @@
                 });
             }
             }
+        }
+
+        function showItem(item)
+        {
+            if (vm.selectedItems != null) {
+                 taskService.showDialog(null, vm.listaCategorie, item, false, false).then(function(i){
+
+                 });
+            }
+
         }
 
         

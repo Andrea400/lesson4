@@ -41,6 +41,7 @@
         vm.deleteItem = deleteItem;
         vm.createItem = createItem;
         vm.editItem = editItem;
+        vm.showItem = showItem;
         vm.toggleSelection = toggleSelection;
         vm.selectedItems =[];
       
@@ -64,8 +65,8 @@
             if (vm.selectedItems != null && vm.selectedItems.length > 0) {
                 var confirm = $mdDialog.confirm()
 
-                .textContent('The selected tasks will be deleted. Are you sure?')
-                    .ariaLabel('Delete tasks')
+                .textContent('The selected notes will be deleted. Are you sure?')
+                    .ariaLabel('Delete notes')
                     .targetEvent(ev)
                     .ok('Yes')
                     .cancel('No');
@@ -79,7 +80,7 @@
                                 if(vm.items[x] == vm.selectedItems[i])
                                 {                                 
                                     vm.items.splice(x, 1);
-                                    //storageService.deleteTask(vm.selectedItems[i]);
+                                    storageService.deleteNote(vm.selectedItems[i]);
                                     
                                 }
                             }
@@ -94,7 +95,7 @@
 
         function createItem(ev){
             console.log("richiamato il createItem");
-            noteService.showDialog(ev).then(function(i){
+            noteService.showDialog(ev, null, null, true).then(function(i){
                 if (i != null )
                 {
                     vm.item = i;
@@ -107,12 +108,12 @@
                     else
                         vm.item.id = 1;
 
-                    if(vm.item.data == null)
-                        vm.item.data = new Date();
+                    if(vm.item.date == null)
+                        vm.item.date = new Date();
                     if(vm.item.tags == null)
                         vm.item.tags="";
                     vm.items.push(vm.item);
-                    //storageService.storeTask(vm.item);
+                    storageService.storeNote(vm.item);
                     console.log("vettore dopo l'inserimento:" + angular.toJson(vm.items));
                     
                 }
@@ -126,33 +127,69 @@
             var tmp;
 
             if (vm.selectedItems != null) {
-                noteService.showDialog(ev, angular.copy(vm.selectedItems[0], tmp)).then(function(i){
+                if(vm.selectedItems.length == 1){
+                noteService.showDialog(ev, angular.copy(vm.selectedItems[0], tmp),false, true).then(function(i){
+                console.log(angular.toJson(i));
                 if (i != null )
-                {
+                {console.log("Modifico l'item");
                     var index = vm.items.indexOf(vm.selectedItems[0]);
                         if (index != -1) {
                             vm.items[index].title = i.title;
                             vm.items[index].description = i.description;
                             vm.items[index].tags = i.tags;
                              vm.items[index].color = i.color;
-                            if (i.data != null)
-                                vm.items[index].data = i.data;
+                            if (i.date != null)
+                                vm.items[index].date = i.date;
                             else
-                                vm.items[index].data = vm.selectedItems[0].data;
+                                vm.items[index].date = vm.selectedItems[0].date;
                                 
-                            storageService.updateTask(vm.items[index]);
+                            storageService.updateNote(vm.items[index]);
                             vm.selectedItems = [];
                         }
                 }
             });
             }
+            
+            //Multimple note edit (only color)
+            else
+            {
+                noteService.showDialog(ev,null,true, true).then(function(i)
+                {
+                    if (i != null)
+                    {
+                        for (var t in vm.selectedItems)
+                        {
+                            for (var x in vm.items)
+                            {
+                                if(vm.items[x].id == vm.selectedItems[t].id)
+                                {
+                                   if (i.color)
+                                        vm.items[x].color = i.color;
+                                                                           
+                                    storageService.updateNote(vm.items[x]);
+                                }
+                            }
+                        }
+                    }
+                    vm.selectedItems = [];
+                });
+                
+            }
+    
+            
+            }
+
         }
 
-        
-    
+        function showItem(item)
+        {
+            if (vm.selectedItems != null) {
+                 noteService.showDialog(null, item,false, false).then(function(i){
 
+                 });
+            }
 
-
+        }
 
     }
 })();

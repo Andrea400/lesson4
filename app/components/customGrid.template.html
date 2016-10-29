@@ -1,7 +1,7 @@
 <div class='md-padding scroll tab-content' layout="row" layout-wrap >                                                                                                            
      <div flex="30" flex-sm="30" flex-gt-xs="30"   ng-repeat="item in customListCtrl.items |  myFilter: customListCtrl.imputSearch : null : customListCtrl.categoria : customListCtrl.filterFunction ">
-            <md-card>
-                  <md-button ng-click="customListCtrl.toggleSelection(item)" ng-class="customListCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+            <md-card ng-class="customListCtrl.selectedItems.indexOf(item)!=-1 ? 'selected':''">
+                  <md-button ng-click="customListCtrl.toggleSelection(item)">
                     <md-card-title>
                       <md-card-title-text>
                         <span class="md-headline coloreScuro">{{item.title}}</span>
@@ -10,11 +10,11 @@
                     </md-card-title>
                     <md-divider></md-divider>
                     <md-card-content>
-                        <span>Data inizio task: {{item.date | date: "dd-MM-yyyy HH:mm"}}</span> 
-                        <div> Tempo stimato:  {{item.estimated}} ore</div>
+                        <span>Start date: {{item.date | date: "dd-MM-yyyy HH:mm"}}</span> 
+                        <div> Estimated time:  {{item.estimated || 0}} hours</div>
                           <md-divider></md-divider>
-                          <span>Fatto : {{item.done}} </span>
-                        <p>description: {{item.description}} </p>
+                          <span>Done : {{item.done}} </span>
+                        <p>Description: {{item.description}} </p>
                         </md-button>
                         <md-divider></md-divider>
                         
@@ -30,7 +30,11 @@
                             <md-button ng-disabled="customListCtrl.selectedItems.indexOf(item) == -1" ng-click="customListCtrl.editItem($event)" >
                                   <md-icon>edit</md-icon>
                             </md-button>
-                            
+
+                            <md-button  ng-disabled="customListCtrl.selectedItems.indexOf(item) == -1" ng-click="customListCtrl.showItem(item)" class="md-icon-button" aria-label="Show">
+                                   <md-icon> visibility </md-icon>
+                            </md-button>
+
                             <md-button  ng-disabled="customListCtrl.selectedItems.indexOf(item) == -1" ng-click="customListCtrl.deleteItem($event)" class="md-icon-button" aria-label="Delete">
                                           <md-icon> delete </md-icon>
                             </md-button>

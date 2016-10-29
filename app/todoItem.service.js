@@ -8,7 +8,7 @@
 
     function taskService($mdDialog){
 
-        this.showDialog = function (ev, categories, item, multiple){
+        this.showDialog = function (ev, categories, item, multiple, edit){
             return $mdDialog.show({
                 controller: DialogController,
                 controllerAs: 'dialogctrl',
@@ -18,15 +18,20 @@
                     status: 'vm.status',
                     prior: 'vm.prior',
                     mindate: 'vm.mindate',
-                    multiple: 'vm.multiple'
+                    multiple: 'vm.multiple',
+                    edit: 'vm.edit'
                 },
                 locals: {
                     item: item,
                     categ: categories,
-                    status: [{key: "NotDone", value: false},
+                    status: [{key: "Not Done", value: false},
                              {key: "Done", value: true}],
-                    prior: ["-1", "0", "1"],
-                    multiple: multiple
+                    
+                    prior: [{key: "Low", value: "-1"},
+                            {key: "Medium", value: "0"},
+                            {key: "High", value: "1"}],
+                    multiple: multiple, 
+                    edit: edit
                 },
                 templateUrl: 'app/panel.tmpl.html',
                 clickOutsideToClose:true,
@@ -46,23 +51,26 @@
 
     
 
-    function DialogController ($mdDialog, categ, status, prior, item, multiple)
+    function DialogController ($mdDialog, categ, status, prior, item, multiple, edit)
     {
         var vm = this;
         vm.item = item;
         vm.categories = categ;
         vm.status = status;
         vm.prior = prior;
-        vm.multiple = multiple;
+        vm.multiple = multiple;  
+        vm.edit = edit;      
 
         vm.getMinDate = getMinDate;
+        vm.operation = getOperation();
         vm.hide = hide;
         vm.cancel = cancel;
         vm.answer = answer;
         vm.mydate = new Date();
         
         vm.mindate = getMinDate();
-    
+        vm.item2 = angular.copy(item) || {};
+           
         function getMinDate()
         {
             if(vm.item == null)
@@ -73,6 +81,18 @@
 
             else
                 return new Date(vm.item.date);
+
+        }
+        
+        function getOperation()
+        {
+            if (multiple && edit)
+                return "Multiple Tasks edit";
+            if (edit && multiple == false && vm.item != null)
+                return "Single Task edit";
+            if (vm.item == null)
+                return "Task Creation";
+            return "Task Details";
         }
 
         function hide()
