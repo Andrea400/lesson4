@@ -1,4 +1,4 @@
-    <!-- menu' a tendina-->
+  <!-- menu' a tendina-->
 
 <md-menu-bar class="floatSx">
           <md-menu>
@@ -11,20 +11,18 @@
                   <md-button ng-click="$mdOpenMenu()">New</md-button>
                   <md-menu-content>
                       <md-menu-divider></md-menu-divider>
-                    <md-menu-item><md-button ng-click="categoryListCtrl.addCategory($event)">Note</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="customNoteCtrl.createItem($event)">Note</md-button></md-menu-item>
                     <md-menu-divider></md-menu-divider>
                   </md-menu-content>
                 </md-menu>
               </md-menu-item>
-             
-              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null" ng-click="categoryListCtrl.renameCategory()"> Rename Note</md-button></md-menu-item>
-              <md-menu-item> <md-button ng-disabled="categoryListCtrl.selectedCategory == null"  ng-click="categoryListCtrl.removeCategory()"> Remove Note</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="customNoteCtrl.selectedItems.length== 0"  ng-click="customNoteCtrl.deleteItem($event)"> Remove Note</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
               
             </md-menu-content>
           </md-menu>
   </md-menu-bar>
-
+ <!-- fine menu' a tendina-->
 
  <md-content class="no-scroll">
         <md-tabs md-dynamic-height md-border-bottom class="no-scroll">

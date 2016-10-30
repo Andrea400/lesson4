@@ -19,7 +19,8 @@
                 filterFunction: '=',
                 categoria: '=',
                 listaCategorie: '=',
-                imputSearch:'='
+                imputSearch:'=',
+                cercaPer:'='
                
             },
             templateUrl: function (element, attribute) {

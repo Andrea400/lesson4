@@ -14,7 +14,8 @@
                 selectedItem: '=',
                 view:'=',
                 //selectedCategory:'=',
-                inputSearch:'='
+                inputSearch:'=',
+                cercaPer:'=',
             
             },
             controller: categoryListController,

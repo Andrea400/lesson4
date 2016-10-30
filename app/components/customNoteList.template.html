@@ -11,14 +11,12 @@
                   <md-button ng-click="$mdOpenMenu()">New</md-button>
                   <md-menu-content>
                       <md-menu-divider></md-menu-divider>
-                    <md-menu-item><md-button ng-click="">Note</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="customNoteCtrl.createItem($event)">Note</md-button></md-menu-item>
                     <md-menu-divider></md-menu-divider>
                   </md-menu-content>
                 </md-menu>
               </md-menu-item>
-             
-              <md-menu-item> <md-button ng-disabled="customNoteCtrl.selectedCategory == null" ng-click="customNoteCtrl.renameCategory()"> Rename Note</md-button></md-menu-item>
-              <md-menu-item> <md-button ng-disabled="customNoteCtrl.selectedCategory == null"  ng-click="customNoteCtrl.removeCategory()"> Remove Note</md-button></md-menu-item>
+              <md-menu-item> <md-button ng-disabled="customNoteCtrl.selectedItems.length== 0"  ng-click="customNoteCtrl.deleteItem($event)"> Remove Note</md-button></md-menu-item>
               <md-menu-divider></md-menu-divider>
               
             </md-menu-content>
