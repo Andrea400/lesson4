@@ -42,16 +42,14 @@ function MyFilter() {
                 result = data;
           }
 
-      //console.log("vettore risultante filtro done: " + done + " e categoria: "+ category + " vet: " +angular.toJson(result));
        return result;
 
     }else if(angular.isArray(data) && inputSerch.length!=0)    
     {
         //non considero il filtraggio per done e per categoria e filtro in base al search
-        console.log("cerca per: " +cercaPer);
         if(cercaPer!= null){
 
-              if(cercaPer == "title"){ console.log("cerca per uguale a title " + cercaPer); 
+              if(cercaPer == "title"){  
                 angular.forEach(data, function(item) { 
                     if (item.title.indexOf(inputSerch)!=-1) {
                       result.push(item);
@@ -80,7 +78,6 @@ function MyFilter() {
                     }
                   });
                 }  
-      //console.log("vettore risultante filtro search: " +angular.toJson(result));
       return result;
     }
   }

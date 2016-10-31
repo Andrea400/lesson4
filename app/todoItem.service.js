@@ -38,10 +38,8 @@
                 targetEvent: ev
             })
             .then(function(answer){
-                console.log("ANSwer: "+angular.toJson(answer));
                 return answer;
             }, function (){
-                console.log("Close modal");
             
             });
         };
@@ -102,14 +100,12 @@
 
         function cancel()
         {
-            console.log ("Multimple: "+vm.multiple);
             $mdDialog.cancel();
         };
 
 
         function answer(ans)
         {
-            console.log("ANS: "+angular.toJson(ans));
             $mdDialog.hide(ans);
         };
 

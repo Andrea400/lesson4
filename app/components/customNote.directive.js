@@ -57,7 +57,6 @@
             // l'elemento non è ancora selezionato quindi lo seleziono
                 vm.selectedItems.push(item);
            }
-            console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
         }
 
 
@@ -85,7 +84,6 @@
                                 }
                             }
                         }
-                    console.log("vettore dopo l'eliminazione:" + angular.toJson(vm.items));
                     vm.selectedItems = [];
                     }
                 });
@@ -94,7 +92,6 @@
 
 
         function createItem(ev){
-            console.log("richiamato il createItem");
             noteService.showDialog(ev, null, null, true).then(function(i){
                 if (i != null )
                 {
@@ -108,13 +105,12 @@
                     else
                         vm.item.id = 1;
 
-                    if(vm.item.date == null)
-                        vm.item.date = new Date();
-                    if(vm.item.tags == null)
-                        vm.item.tags="";
+                    vm.item.description = i.description || "";
+                    vm.item.tags= i.tags || [];
+                    vm.item.date = i.date || new Date();
+                        
                     vm.items.push(vm.item);
                     storageService.storeNote(vm.item);
-                    console.log("vettore dopo l'inserimento:" + angular.toJson(vm.items));
                     
                 }
                
@@ -129,19 +125,16 @@
             if (vm.selectedItems != null) {
                 if(vm.selectedItems.length == 1){
                 noteService.showDialog(ev, angular.copy(vm.selectedItems[0], tmp),false, true).then(function(i){
-                console.log(angular.toJson(i));
                 if (i != null )
-                {console.log("Modifico l'item");
+                {
                     var index = vm.items.indexOf(vm.selectedItems[0]);
                         if (index != -1) {
                             vm.items[index].title = i.title;
-                            vm.items[index].description = i.description;
-                            vm.items[index].tags = i.tags;
-                             vm.items[index].color = i.color;
-                            if (i.date != null)
-                                vm.items[index].date = i.date;
-                            else
-                                vm.items[index].date = vm.selectedItems[0].date;
+                            vm.items[index].description = i.description || "";
+                            vm.items[index].tags = i.tags || [] ;
+                            vm.items[index].color = i.color;
+                            vm.items[index].date = i.date || vm.selectedItems[0].date
+                           
                                 
                             storageService.updateNote(vm.items[index]);
                             vm.selectedItems = [];

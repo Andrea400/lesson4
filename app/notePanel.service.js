@@ -7,7 +7,6 @@
     noteService.$inject = ['$mdDialog'];
 
     function noteService($mdDialog){
-                console.log("aperto il noteService.showDialog");
         this.showDialog = function (ev, item, multiple, edit){
             return $mdDialog.show({
                 controller: DialogController,
@@ -35,10 +34,8 @@
                 targetEvent: ev
             })
             .then(function(answer){
-                console.log("ANSwer: "+angular.toJson(answer));
                 return answer;
             }, function (){
-                console.log("Close modal");
             
             });
         };
@@ -103,14 +100,12 @@
 
         function cancel()
         {
-            console.log ("Multimple: "+vm.multiple);
             $mdDialog.cancel();
         };
 
 
         function answer(ans)
         {
-            console.log("ANS: "+angular.toJson(ans));
             $mdDialog.hide(ans);
         };
 

@@ -37,7 +37,6 @@
 
         function initDB()
         {
-            console.log("Initializing DB");
             alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject18');
             alasql('ATTACH localStorage DATABASE dbproject18');
             alasql('USE dbproject18');
@@ -62,20 +61,17 @@
         function storeTask(item)
         {
             alasql('INSERT INTO ' +tasks+ ' VALUES ?',[item]);
-            console.log("tasks after store: "+angular.toJson(alasql('SELECT * FROM '+tasks)));
         }
 
         function updateTask(item)
         {
             alasql('UPDATE ' +tasks+ ' SET title=? , description=? , category=? , done=? , priority=? , tags=? , estimated=? , date=? WHERE id=?',[item.title, item.description, item.category,
             item.done, item.priority, item.tags, item.estimated, item.date, item.id]);
-            console.log("tasks after update: "+angular.toJson(alasql('SELECT * FROM '+tasks)));
         }
 
         function deleteTask(item)
         {
             alasql('DELETE FROM ' + tasks + ' WHERE id=?',[item.id]);
-            console.log("tasks after drop: "+angular.toJson(alasql('SELECT * FROM ' + tasks)));
         }
         
         function getCategories() {
@@ -89,20 +85,17 @@
         function storeCategory(item)
         {
             alasql('INSERT INTO ' +categories+ ' VALUES (?,?)',[item.id,item.category]);
-            console.log("Categories after store: "+angular.toJson(alasql('SELECT * FROM '+categories)));
         }
 
         function updateCategory(item)
         {
             alasql('UPDATE ' +categories+ ' SET category=? WHERE id=?',[item.category, item.id]);
-            console.log("tasks after update: "+angular.toJson(alasql('SELECT * FROM '+categories)));
         }
 
 
         function deleteCategory(item)
         {
             alasql('DELETE FROM ' + categories + ' WHERE id=?', [item.id]);
-            console.log("Categories after drop: "+angular.toJson(alasql('SELECT * FROM ' + categories)));
         }
 
 
@@ -117,20 +110,17 @@
         function storeNote(item)
         {
             alasql('INSERT INTO ' +notes+ ' VALUES ?',[item]);
-            console.log("Notes after store: "+angular.toJson(alasql('SELECT * FROM '+notes)));
         }
 
         function deleteNote(item)
         {
             alasql('DELETE FROM ' + notes + ' WHERE id=?', [item.id]);
-            console.log("Notes after drop: "+angular.toJson(alasql('SELECT * FROM ' + notes)));
         }
 
         function updateNote(item)
         {
             alasql('UPDATE ' +notes+ ' SET title=?, description=? , color=? , tags=? , date=? WHERE id=?',[item.title, item.description, item.color,
             item.tags, item.date, item.id]);
-            console.log("notes after update: "+angular.toJson(alasql('SELECT * FROM '+notes)));
         }
 
         //Loads value from the session storage
@@ -144,9 +134,7 @@
 
         //Saves the value to the session storage
         function set(value) {
-            console.log("ServiceStorage : set " + value);
             $window.localStorage.setItem("taskStorage", angular.toJson(value));
-            console.log("ServiceStorage : salvataggio effettuato");
         }
         
     }
