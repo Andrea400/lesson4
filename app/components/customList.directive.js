@@ -68,8 +68,6 @@
 
         //Occurs when the status of an items changes
         function checkStateChanged(item) {
-            console.log("custionListCtrl: richiamata checkStateChanged ");
-            console.log("custionListCtrl: salvataggio: " + vm.items);
             storageService.updateTask(item);
         }
 
@@ -83,7 +81,6 @@
             // l'elemento non è ancora selezionato quindi lo seleziono
                 vm.selectedItems.push(item);
            }
-            console.log("elementi selezionati dopo: " + angular.toJson(vm.selectedItems));
         }
                
        
@@ -119,7 +116,10 @@
 
 
         function createItem(ev){
-            taskService.showDialog(ev,vm.listaCategorie,null, false, true).then(function(i){
+            var multiple = false; //single task operation
+            var edit = true;      //enable edit fields
+
+            taskService.showDialog(ev,vm.listaCategorie,null, multiple, edit).then(function(i){
                 if (i != null )
                 {
                     vm.item = i;
@@ -131,8 +131,9 @@
                     else
                         vm.item.id = 1;
 
-                    if(vm.item.date == null)
-                        vm.item.date = new Date();
+                    vm.item.date = vm.item.date || new Date();
+
+                    vm.item.description = vm.item.description || "";
                     vm.items.push(vm.item);
                     storageService.storeTask(vm.item);
                 }
@@ -143,25 +144,24 @@
 
         function editItem(ev){
             var tmp;
+            var multiple = false; //single task operation
+            var edit = true;      //enable edit fields
 
             if (vm.selectedItems != null) {
                 if(vm.selectedItems.length == 1){
-                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp),false, true).then(function(i){
+                taskService.showDialog(ev, vm.listaCategorie, angular.copy(vm.selectedItems[0], tmp),multiple, edit).then(function(i){
                 if (i != null )
                 {
                     var index = vm.items.indexOf(vm.selectedItems[0]);
                         if (index != -1) {
                             vm.items[index].title = i.title;
-                            vm.items[index].description = i.description;
-                            vm.items[index].priority = i.priority;
-                            vm.items[index].tags = i.tags;
+                            vm.items[index].description = i.description || "";
+                            vm.items[index].priority = i.priority;  
+                            vm.items[index].tags = i.tags || [];
                             vm.items[index].category = i.category;
                             vm.items[index].done = i.done;
                             vm.items[index].estimated = i.estimated;
-                            if (i.date != null)
-                                vm.items[index].date = i.date;
-                            else
-                                vm.items[index].date = vm.selectedItems[0].date;
+                            vm.items[index].date = i.date || vm.selectedItems[0].date;
                                 
                             storageService.updateTask(vm.items[index]);
                             vm.selectedItems = [];
@@ -173,7 +173,8 @@
             //Multimple task edit (only priority and status)
             else
             {
-                taskService.showDialog(ev,null,null, true, true).then(function(i)
+                multiple = true; //enable multiple operation
+                taskService.showDialog(ev,null,null, multiple, edit).then(function(i)
                 {
                     if (i != null)
                     {
@@ -201,6 +202,9 @@
 
         function showItem(item)
         {
+            var multiple = false; //single task operation
+            var edit = false;     //disable edit fields
+
             if (vm.selectedItems != null) {
                  taskService.showDialog(null, vm.listaCategorie, item, false, false).then(function(i){
 

@@ -37,9 +37,9 @@
 
         function initDB()
         {
-            alasql('CREATE localStorage DATABASE IF NOT EXISTS dbproject18');
-            alasql('ATTACH localStorage DATABASE dbproject18');
-            alasql('USE dbproject18');
+            alasql('CREATE localStorage DATABASE IF NOT EXISTS disnote');
+            alasql('ATTACH localStorage DATABASE disnote');
+            alasql('USE disnote');
 
             alasql('CREATE TABLE IF NOT EXISTS ' + tasks + ' (id INTEGER PRIMARY KEY, title STRING, description STRING, category STRING, done BOOLEAN, priority INT, tags json, estimated INT, date DATE)');
             alasql('CREATE TABLE IF NOT EXISTS ' + categories + ' (id INTEGER PRIMARY KEY, category STRING)');
